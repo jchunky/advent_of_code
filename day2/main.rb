@@ -1,5 +1,11 @@
 require "active_support/all"
 
+def safe_with_dampening?(report)
+  variations = Array.new(report.size) { |i| report.dup.tap { |r| r.delete_at(i) } }
+
+  variations.any? { safe?(_1) }
+end
+
 def safe?(report)
   return false unless [report.sort, report.sort.reverse].include?(report)
 
@@ -8,3 +14,6 @@ end
 
 reports = File.read("input.txt").lines.map(&:split).map { |e| e.map(&:to_i) }
 p reports.count { safe?(_1) }
+
+reports = File.read("input.txt").lines.map(&:split).map { |e| e.map(&:to_i) }
+p reports.count { safe_with_dampening?(_1) }

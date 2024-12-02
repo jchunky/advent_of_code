@@ -15,5 +15,4 @@ end
 reports = File.read("input.txt").lines.map(&:split).map { |e| e.map(&:to_i) }
 p reports.count { safe?(_1) }
 
-reports = File.read("input.txt").lines.map(&:split).map { |e| e.map(&:to_i) }
 p reports.count { safe_with_dampening?(_1) }

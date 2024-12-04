@@ -49,4 +49,49 @@ count +=
     end
   end
 
-p count
+p count # 2718
+
+count = 0
+
+count +=
+  rows.count.times.sum do |r|
+    cols.count.times.count do |c|
+      rows.dig(r + 2, c + 0) == "S" &&
+        rows.dig(r + 1, c + 1) == "A" &&
+        rows.dig(r + 0, c + 2) == "M" &&
+        rows.dig(r + 0, c + 0) == "S" &&
+        rows.dig(r + 2, c + 2) == "M"
+    end
+  end
+count +=
+  rows.count.times.sum do |r|
+    cols.count.times.count do |c|
+      rows.dig(r + 2, c + 0) == "M" &&
+        rows.dig(r + 1, c + 1) == "A" &&
+        rows.dig(r + 0, c + 2) == "S" &&
+        rows.dig(r + 0, c + 0) == "S" &&
+        rows.dig(r + 2, c + 2) == "M"
+    end
+  end
+count +=
+  rows.count.times.sum do |r|
+    cols.count.times.count do |c|
+      rows.dig(r + 2, c + 0) == "S" &&
+        rows.dig(r + 1, c + 1) == "A" &&
+        rows.dig(r + 0, c + 2) == "M" &&
+        rows.dig(r + 0, c + 0) == "M" &&
+        rows.dig(r + 2, c + 2) == "S"
+    end
+  end
+count +=
+  rows.count.times.sum do |r|
+    cols.count.times.count do |c|
+      rows.dig(r + 2, c + 0) == "M" &&
+        rows.dig(r + 1, c + 1) == "A" &&
+        rows.dig(r + 0, c + 2) == "S" &&
+        rows.dig(r + 0, c + 0) == "M" &&
+        rows.dig(r + 2, c + 2) == "S"
+    end
+  end
+
+p count # 2046

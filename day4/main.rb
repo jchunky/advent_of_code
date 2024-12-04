@@ -11,103 +11,24 @@ count = 0
 rows = File.readlines("input.txt").map(&:chomp).map(&:chars)
 cols = rows.transpose
 
-count +=
-  rows.count.times.sum do |r|
-    cols.count.times.count do |c|
-      coords = [
-        [0, 0],
-        [0, 1],
-        [0, 2],
-        [0, 3],
-      ]
-      check(rows, r, c, coords, "XMAS")
+directions = [
+  [[0, 0], [0, 1], [0, 2], [0, 3]],
+  [[0, 3], [0, 2], [0, 1], [0, 0]],
+  [[0, 0], [1, 0], [2, 0], [3, 0]],
+  [[3, 0], [2, 0], [1, 0], [0, 0]],
+  [[0, 0], [1, 1], [2, 2], [3, 3]],
+  [[3, 3], [2, 2], [1, 1], [0, 0]],
+  [[3, 0], [2, 1], [1, 2], [0, 3]],
+  [[0, 3], [1, 2], [2, 1], [3, 0]],
+]
+directions.each do |coords|
+  count +=
+    rows.count.times.sum do |r|
+      cols.count.times.count do |c|
+        check(rows, r, c, coords, "XMAS")
+      end
     end
-  end
-count +=
-  rows.count.times.sum do |r|
-    cols.count.times.count do |c|
-      coords = [
-        [0, 3],
-        [0, 2],
-        [0, 1],
-        [0, 0],
-      ]
-      check(rows, r, c, coords, "XMAS")
-    end
-  end
-count +=
-  rows.count.times.sum do |r|
-    cols.count.times.count do |c|
-      coords = [
-        [0, 0],
-        [1, 0],
-        [2, 0],
-        [3, 0],
-      ]
-      check(rows, r, c, coords, "XMAS")
-    end
-  end
-count +=
-  rows.count.times.sum do |r|
-    cols.count.times.count do |c|
-      coords = [
-        [3, 0],
-        [2, 0],
-        [1, 0],
-        [0, 0],
-      ]
-      check(rows, r, c, coords, "XMAS")
-    end
-  end
-
-count +=
-  rows.count.times.sum do |r|
-    cols.count.times.count do |c|
-      coords = [
-        [0, 0],
-        [1, 1],
-        [2, 2],
-        [3, 3],
-      ]
-      check(rows, r, c, coords, "XMAS")
-    end
-  end
-count +=
-  rows.count.times.sum do |r|
-    cols.count.times.count do |c|
-      coords = [
-        [0, 0],
-        [1, 1],
-        [2, 2],
-        [3, 3],
-      ]
-      check(rows, r, c, coords, "XMAS".reverse)
-    end
-  end
-count +=
-  rows.count.times.sum do |r|
-    cols.count.times.count do |c|
-      coords = [
-        [3, 0],
-        [2, 1],
-        [1, 2],
-        [0, 3],
-      ]
-      check(rows, r, c, coords, "XMAS")
-    end
-  end
-count +=
-  rows.count.times.sum do |r|
-    cols.count.times.count do |c|
-      coords = [
-        [3, 0],
-        [2, 1],
-        [1, 2],
-        [0, 3],
-      ]
-      check(rows, r, c, coords, "XMAS".reverse)
-    end
-  end
+end
 
 p count # 2718
 
@@ -117,18 +38,10 @@ count =
   words.product(words).sum do |word1, word2|
     rows.count.times.sum do |r|
       cols.count.times.count do |c|
-        coords = [
-          [2, 0],
-          [1, 1],
-          [0, 2],
-        ]
+        coords = [[2, 0], [1, 1], [0, 2]]
         first = check(rows, r, c, coords, word1)
 
-        coords = [
-          [0, 0],
-          [1, 1],
-          [2, 2],
-        ]
+        coords = [[0, 0], [1, 1], [2, 2]]
         second = check(rows, r, c, coords, word2)
 
         first && second

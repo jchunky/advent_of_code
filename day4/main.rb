@@ -6,8 +6,6 @@ def check(rows, r, c, coords, word)
   end
 end
 
-count = 0
-
 rows = File.readlines("input.txt").map(&:chomp).map(&:chars)
 cols = rows.transpose
 
@@ -21,15 +19,14 @@ directions = [
   [[3, 0], [2, 1], [1, 2], [0, 3]],
   [[0, 3], [1, 2], [2, 1], [3, 0]],
 ]
-directions.each do |coords|
-  count +=
+count =
+  directions.sum do |coords|
     rows.count.times.sum do |r|
       cols.count.times.count do |c|
         check(rows, r, c, coords, "XMAS")
       end
     end
-end
-
+  end
 p count # 2718
 
 word = "MAS"
@@ -48,5 +45,4 @@ count =
       end
     end
   end
-
 p count # 2046

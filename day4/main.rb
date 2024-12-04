@@ -35,13 +35,13 @@ count =
   words.product(words).sum do |word1, word2|
     rows.count.times.sum do |r|
       cols.count.times.count do |c|
-        coords = [[0, 0], [1, 1], [2, 2]]
-        first = find_word?(rows, r, c, coords, word2)
+        coords1 = [[0, 0], [1, 1], [2, 2]]
+        found1 = find_word?(rows, r, c, coords1, word1)
 
-        coords = [[2, 0], [1, 1], [0, 2]]
-        second = find_word?(rows, r, c, coords, word1)
+        coords2 = [[2, 0], [1, 1], [0, 2]]
+        found2 = find_word?(rows, r, c, coords2, word2)
 
-        first && second
+        found1 && found2
       end
     end
   end

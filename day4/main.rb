@@ -35,11 +35,11 @@ count =
   words.product(words).sum do |word1, word2|
     rows.count.times.sum do |r|
       cols.count.times.count do |c|
-        coords = [[2, 0], [1, 1], [0, 2]]
-        first = check(rows, r, c, coords, word1)
-
         coords = [[0, 0], [1, 1], [2, 2]]
-        second = check(rows, r, c, coords, word2)
+        first = check(rows, r, c, coords, word2)
+
+        coords = [[2, 0], [1, 1], [0, 2]]
+        second = check(rows, r, c, coords, word1)
 
         first && second
       end

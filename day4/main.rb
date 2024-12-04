@@ -39,7 +39,7 @@ count =
         coords1 = [[0, 0], [1, 1], [2, 2]] # falling diagonal
         found1 = find_word?(rows, r, c, coords1, word1)
 
-        coords2 = [[2, 0], [1, 1], [0, 2]] # firsing diagonal
+        coords2 = [[2, 0], [1, 1], [0, 2]] # rising diagonal
         found2 = find_word?(rows, r, c, coords2, word2)
 
         found1 && found2

@@ -32,14 +32,13 @@ p count # 2718
 
 word = "MAS"
 words = [word, word.reverse]
+falling_diagonal = [[0, 0], [1, 1], [2, 2]]
+rising_diagonal = [[2, 0], [1, 1], [0, 2]]
 count =
   words.product(words).sum do |word1, word2|
     row_count.times.sum do |r|
       col_count.times.count do |c|
-        falling_diagonal = [[0, 0], [1, 1], [2, 2]]
         found_falling_diagonal = find_word?(rows, r, c, falling_diagonal, word1)
-
-        rising_diagonal = [[2, 0], [1, 1], [0, 2]]
         found_rising_diagonal = find_word?(rows, r, c, rising_diagonal, word2)
 
         found_falling_diagonal && found_rising_diagonal

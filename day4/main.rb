@@ -8,16 +8,58 @@ end
 
 count = 0
 
-rows = File.readlines("input.txt")
-count += rows.sum { |row| row.scan("XMAS").count }
-count += rows.sum { |row| row.scan("SAMX").count }
-
-cols = rows.map(&:chomp).map(&:chars).transpose.map(&:join)
-count += cols.sum { |col| col.scan("XMAS").count }
-count += cols.sum { |col| col.scan("SAMX").count }
-
-rows = rows.map(&:chomp).map(&:chars)
+rows = File.readlines("input.txt").map(&:chomp).map(&:chars)
 cols = rows.transpose
+
+count +=
+  rows.count.times.sum do |r|
+    cols.count.times.count do |c|
+      coords = [
+        [0, 0],
+        [0, 1],
+        [0, 2],
+        [0, 3],
+      ]
+      check(rows, r, c, coords, "XMAS")
+    end
+  end
+count +=
+  rows.count.times.sum do |r|
+    cols.count.times.count do |c|
+      coords = [
+        [0, 3],
+        [0, 2],
+        [0, 1],
+        [0, 0],
+      ]
+      check(rows, r, c, coords, "XMAS")
+    end
+  end
+count +=
+  rows.count.times.sum do |r|
+    cols.count.times.count do |c|
+      coords = [
+        [0, 0],
+        [1, 0],
+        [2, 0],
+        [3, 0],
+      ]
+      check(rows, r, c, coords, "XMAS")
+    end
+  end
+count +=
+  rows.count.times.sum do |r|
+    cols.count.times.count do |c|
+      coords = [
+        [3, 0],
+        [2, 0],
+        [1, 0],
+        [0, 0],
+      ]
+      check(rows, r, c, coords, "XMAS")
+    end
+  end
+
 count +=
   rows.count.times.sum do |r|
     cols.count.times.count do |c|

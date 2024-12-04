@@ -36,13 +36,13 @@ count =
   words.product(words).sum do |word1, word2|
     row_count.times.sum do |r|
       col_count.times.count do |c|
-        coords1 = [[0, 0], [1, 1], [2, 2]] # falling diagonal
-        found1 = find_word?(rows, r, c, coords1, word1)
+        falling_diagonal = [[0, 0], [1, 1], [2, 2]]
+        found_falling_diagonal = find_word?(rows, r, c, falling_diagonal, word1)
 
-        coords2 = [[2, 0], [1, 1], [0, 2]] # rising diagonal
-        found2 = find_word?(rows, r, c, coords2, word2)
+        rising_diagonal = [[2, 0], [1, 1], [0, 2]]
+        found_rising_diagonal = find_word?(rows, r, c, rising_diagonal, word2)
 
-        found1 && found2
+        found_falling_diagonal && found_rising_diagonal
       end
     end
   end

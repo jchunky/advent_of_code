@@ -1,6 +1,6 @@
 require "active_support/all"
 
-def check(rows, r, c, coords, word)
+def find_word?(rows, r, c, coords, word)
   coords.each.with_index.all? do |(row_delta, col_delta), i|
     rows.dig(r + row_delta, c + col_delta) == word[i]
   end
@@ -23,7 +23,7 @@ count =
   directions.sum do |coords|
     rows.count.times.sum do |r|
       cols.count.times.count do |c|
-        check(rows, r, c, coords, "XMAS")
+        find_word?(rows, r, c, coords, "XMAS")
       end
     end
   end
@@ -36,10 +36,10 @@ count =
     rows.count.times.sum do |r|
       cols.count.times.count do |c|
         coords = [[0, 0], [1, 1], [2, 2]]
-        first = check(rows, r, c, coords, word2)
+        first = find_word?(rows, r, c, coords, word2)
 
         coords = [[2, 0], [1, 1], [0, 2]]
-        second = check(rows, r, c, coords, word1)
+        second = find_word?(rows, r, c, coords, word1)
 
         first && second
       end

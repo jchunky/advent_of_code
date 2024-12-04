@@ -7,7 +7,8 @@ def find_word?(rows, r, c, coords, word)
 end
 
 rows = File.readlines("input.txt").map(&:chomp).map(&:chars)
-cols = rows.transpose
+row_count = rows.count
+col_count = rows.first.count
 
 directions = [
   [[0, 0], [0, 1], [0, 2], [0, 3]],
@@ -21,8 +22,8 @@ directions = [
 ]
 count =
   directions.sum do |coords|
-    rows.count.times.sum do |r|
-      cols.count.times.count do |c|
+    row_count.times.sum do |r|
+      col_count.times.count do |c|
         find_word?(rows, r, c, coords, "XMAS")
       end
     end
@@ -33,8 +34,8 @@ word = "MAS"
 words = [word, word.reverse]
 count =
   words.product(words).sum do |word1, word2|
-    rows.count.times.sum do |r|
-      cols.count.times.count do |c|
+    row_count.times.sum do |r|
+      col_count.times.count do |c|
         coords1 = [[0, 0], [1, 1], [2, 2]]
         found1 = find_word?(rows, r, c, coords1, word1)
 

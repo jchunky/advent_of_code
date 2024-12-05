@@ -39,10 +39,10 @@ updates = updates.split("\n").map { |u| u.split(",").map(&:to_i) }
 result = updates
   .select { |u| correct?(rules, u) }
   .sum { |u| middle(u) }
-p result # 5331
+p result # 5588
 
 result = updates
   .reject { |u| correct?(rules, u) }
   .map { |u| find_correct_permutation(rules, u) }
   .sum { |u| middle(u) }
-p result
+p result # 5331

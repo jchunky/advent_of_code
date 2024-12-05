@@ -1,8 +1,7 @@
 require "active_support/all"
 
 def correct_by_rule?(rule, update)
-  a, b = rule
-  i, j = [a, b].map { |n| update.index(n) }
+  i, j = rule.map { |n| update.index(n) }
   !i || !j || i < j
 end
 

@@ -2,12 +2,8 @@ require "active_support/all"
 
 def correct_by_rule?(rule, update)
   a, b = rule
-  a_index = update.index(a)
-  b_index = update.index(b)
-  return true unless a_index
-  return true unless b_index
-
-  a_index < b_index
+  i, j = [a, b].map { |n| update.index(n) }
+  !i || !j || i < j
 end
 
 def correct?(rules, update)

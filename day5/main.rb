@@ -14,17 +14,14 @@ def middle(array)
 end
 
 def find_correct_permutation(rules, update)
-  count = update.length
   update = update.dup
-  result = []
   rules = rules.select { |a, b| update.include?(a) && update.include?(b) }
-  while result.length < count
+  Array.new(update.length) do
     next_number = update.find { |n| rules.map(&:last).exclude?(n) }
-    result << next_number
     update.delete(next_number)
     rules = rules.reject { |a, b| a == next_number }
+    next_number
   end
-  result
 end
 
 rules, updates = File.read("input.txt").split("\n\n")

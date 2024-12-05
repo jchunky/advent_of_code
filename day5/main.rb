@@ -14,8 +14,8 @@ def correct?(rules, update)
   rules.all? { |r| correct_by_rule?(r, update) }
 end
 
-def middle(update)
-  update[update.length / 2]
+def middle(array)
+  array[array.length / 2]
 end
 
 def find_correct_permutation(rules, update)

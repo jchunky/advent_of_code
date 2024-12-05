@@ -1,12 +1,12 @@
 require "active_support/all"
 
+def correct?(rules, update)
+  rules.all? { |r| correct_by_rule?(r, update) }
+end
+
 def correct_by_rule?(rule, update)
   i, j = rule.map { |n| update.index(n) }
   !i || !j || i < j
-end
-
-def correct?(rules, update)
-  rules.all? { |r| correct_by_rule?(r, update) }
 end
 
 def middle(array)

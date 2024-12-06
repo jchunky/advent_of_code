@@ -36,6 +36,10 @@ class Map
     at_coord(coord) == "#"
   end
 
+  def guard_at?(coord)
+    at_coord(coord) == "^"
+  end
+
   def at_coord(coord)
     grid.dig(coord.row, coord.col)
   end
@@ -122,7 +126,7 @@ class Main
     obstruction_count =
       map
         .each_coord.reject { |coord|
-          map.obstacle_at?(coord)
+          map.obstacle_at?(coord) || map.guard_at?(coord)
         }
         .count do |coord|
           print "."

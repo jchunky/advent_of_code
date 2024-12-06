@@ -36,8 +36,8 @@ class Main
   end
 
   def off_grid?
-    !(0...grid.size).cover?(position[0]) ||
-      !(0...grid.first.size).cover?(position[1])
+    !(0...grid.size).cover?(position.row) ||
+      !(0...grid.first.size).cover?(position.col)
   end
 
   def mark_current_position

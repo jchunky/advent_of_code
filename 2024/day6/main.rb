@@ -58,7 +58,6 @@ class Map
 
   def walk_path
     until off_grid? || has_cycle?
-      mark_current_position
       turn_right while obstacle_in_front?
       step
     end
@@ -67,10 +66,6 @@ class Map
   def off_grid?
     !(0...grid.size).cover?(position.row) ||
       !(0...grid.first.size).cover?(position.col)
-  end
-
-  def mark_current_position
-    grid[position.row][position.col] = "X"
   end
 
   def turn_right
@@ -114,7 +109,6 @@ class Main
           map.obstacle_at?(coord)
         }
         .count do |coord|
-          print "."
           map.build_with_obstacle(coord).path_has_cycle?
         end
     p obstruction_count

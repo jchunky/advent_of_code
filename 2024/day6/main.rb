@@ -51,7 +51,9 @@ class Map
   end
 
   def build_with_obstacle(coord)
-    Map.new(grid.map(&:dup), initial_position)
+    new_grid = grid.map(&:dup)
+    new_grid[coord.row][coord.col] = "#"
+    Map.new(new_grid, initial_position)
   end
 
   private
@@ -102,6 +104,20 @@ end
 class Main
   def run
     grid = File.readlines("input.txt").map(&:chomp).map(&:chars)
+
+    # grid =
+    #   "....#.....\n" \
+    #   ".........#\n" \
+    #   "..........\n" \
+    #   "..#.......\n" \
+    #   ".......#..\n" \
+    #   "..........\n" \
+    #   ".#..^.....\n" \
+    #   "........#.\n" \
+    #   "#.........\n" \
+    #   "......#...\n"
+    # grid = grid.split("\n").map(&:chars)
+
     map = Map.new(grid)
     obstruction_count =
       map
@@ -109,6 +125,7 @@ class Main
           map.obstacle_at?(coord)
         }
         .count do |coord|
+          print "."
           map.build_with_obstacle(coord).path_has_cycle?
         end
     p obstruction_count

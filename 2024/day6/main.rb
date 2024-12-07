@@ -2,17 +2,17 @@ require "active_support/all"
 
 input = File.readlines("input.txt").map(&:chomp)
 
-input = "....#.....
-.........#
-..........
-..#.......
-.......#..
-..........
-.#..^.....
-........#.
-#.........
-......#...
-".split("\n")
+# input = "....#.....
+# .........#
+# ..........
+# ..#.......
+# .......#..
+# ..........
+# .#..^.....
+# ........#.
+# #.........
+# ......#...
+# ".split("\n")
 
 class Position < Struct.new(:row, :col)
   def next_position(bearing)
@@ -123,8 +123,7 @@ class Grid < Struct.new(:rows)
   def each_position
     0.upto(rows.size - 1).each do |row|
       0.upto(rows.first.size - 1).each do |col|
-        position = Position.new(row, col)
-        yield(position)
+        yield Position.new(row, col)
       end
     end
   end
@@ -139,8 +138,8 @@ class Map
   end
 
   def variations_with_loop_count
-    grid.each_variation.count do |grid|
-      print "."
+    grid.each_variation.with_index.count do |grid, i|
+      print "." if i % grid.rows.size == 0
       guard = Guard.new(grid, starting_guard_position)
       guard.walk
       guard.in_loop?

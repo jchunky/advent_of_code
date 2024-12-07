@@ -34,7 +34,7 @@ class Guard < Struct.new(:grid, :position, :directions, :loop_found, :visits)
     while on_grid? && !in_loop?
       record_visit
       turn_right while facing_obstacle?
-      step until !on_grid? || facing_obstacle?
+      step while on_grid? && !facing_obstacle?
     end
   end
 

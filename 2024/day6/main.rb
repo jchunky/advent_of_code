@@ -2,18 +2,18 @@ require "active_support/all"
 
 input = File.readlines("input.txt").map(&:chomp)
 
-input =
-  "....#.....
-.........#
-..........
-..#.......
-.......#..
-..........
-.#..^.....
-........#.
-#.........
-......#...
-".split("\n")
+# input =
+#   "....#.....
+# .........#
+# ..........
+# ..#.......
+# .......#..
+# ..........
+# .#..^.....
+# ........#.
+# #.........
+# ......#...
+# ".split("\n")
 
 class Position < Struct.new(:row, :col)
   def next_position(bearing)
@@ -40,10 +40,6 @@ class Guard < Struct.new(:grid, :position, :directions)
 
   private
 
-  def bearing
-    directions.first
-  end
-
   def on_grid?
     grid.include?(position)
   end
@@ -64,21 +60,13 @@ class Guard < Struct.new(:grid, :position, :directions)
   def next_position
     position.next_position(bearing)
   end
+
+  def bearing
+    directions.first
+  end
 end
 
 class Grid < Struct.new(:rows)
-  def visited_position_count
-    rows.join.count("X")
-  end
-
-  def include?(position)
-    (0...rows.size).cover?(position.row) && (0...rows.first.size).cover?(position.col)
-  end
-
-  def obstacle_at?(position)
-    content_of(position) == "#"
-  end
-
   def record_visit(position)
     rows[position.row][position.col] = "X"
   end
@@ -89,6 +77,18 @@ class Grid < Struct.new(:rows)
         return Position.new(row, col) if rows[row][col] == "^"
       end
     end
+  end
+
+  def visited_position_count
+    rows.join.count("X")
+  end
+
+  def include?(position)
+    (0...rows.size).cover?(position.row) && (0...rows.first.size).cover?(position.col)
+  end
+
+  def obstacle_at?(position)
+    content_of(position) == "#"
   end
 
   private
@@ -102,13 +102,12 @@ class Map
   attr_reader :grid, :guard
 
   delegate :visited_position_count, to: :grid
+  delegate :walk, to: :guard
 
   def initialize(rows)
     @grid = Grid.new(rows)
     @guard = Guard.new(@grid, @grid.find_guard_position)
   end
-
-  delegate :walk, to: :guard
 end
 
 rows = input.map(&:chars)

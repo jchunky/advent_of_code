@@ -2,18 +2,18 @@ require "active_support/all"
 
 input = File.readlines("input.txt").map(&:chomp)
 
-# input =
-#   "....#.....
-# .........#
-# ..........
-# ..#.......
-# .......#..
-# ..........
-# .#..^.....
-# ........#.
-# #.........
-# ......#...
-# ".split("\n")
+input =
+  "....#.....
+.........#
+..........
+..#.......
+.......#..
+..........
+.#..^.....
+........#.
+#.........
+......#...
+".split("\n")
 
 class Position < Struct.new(:row, :col)
   def next_position(bearing)
@@ -26,16 +26,20 @@ class Position < Struct.new(:row, :col)
   end
 end
 
-class Guard < Struct.new(:grid, :position, :directions)
+class Guard < Struct.new(:grid, :position, :directions, :loop_found, :visits)
   def initialize(grid, position)
-    super(grid, position, %i[north east south west])
+    super(grid, position, %i[north east south west], false, {})
   end
 
   def walk
-    while on_grid?
+    while on_grid? && !in_loop?
       turn_right while facing_obstacle?
       step
     end
+  end
+
+  def in_loop?
+    loop_found
   end
 
   private
@@ -53,7 +57,9 @@ class Guard < Struct.new(:grid, :position, :directions)
   end
 
   def step
-    grid.record_visit(position)
+    visit = [position.row, position.col, bearing].to_s
+    self.loop_found = true if visits.include?(visit)
+    visits[visit] = true
     self.position = next_position
   end
 
@@ -67,20 +73,12 @@ class Guard < Struct.new(:grid, :position, :directions)
 end
 
 class Grid < Struct.new(:rows)
-  def record_visit(position)
-    rows[position.row][position.col] = "X"
-  end
-
   def find_guard_position
     0.upto(rows.size - 1).each do |row|
       0.upto(rows.first.size - 1).each do |col|
         return Position.new(row, col) if rows[row][col] == "^"
       end
     end
-  end
-
-  def visited_position_count
-    rows.join.count("X")
   end
 
   def include?(position)
@@ -91,6 +89,29 @@ class Grid < Struct.new(:rows)
     content_of(position) == "#"
   end
 
+  def guard_at?(position)
+    content_of(position) == "^"
+  end
+
+  def each_variation
+    return enum_for(:each_variation) unless block_given?
+
+    0.upto(rows.size - 1).each do |row|
+      0.upto(rows.first.size - 1).each do |col|
+        position = Position.new(row, col)
+        next unless !obstacle_at?(position) || !guard_at?(position)
+
+        new_grid = Grid.new(rows.map(&:dup))
+        new_grid.place_obstacle_at(position)
+        yield(new_grid)
+      end
+    end
+  end
+
+  def place_obstacle_at(position)
+    rows[position.row][position.col] = "#"
+  end
+
   private
 
   def content_of(position)
@@ -99,18 +120,22 @@ class Grid < Struct.new(:rows)
 end
 
 class Map
-  attr_reader :grid, :guard
-
-  delegate :visited_position_count, to: :grid
-  delegate :walk, to: :guard
+  attr_reader :grid, :starting_guard_position
 
   def initialize(rows)
     @grid = Grid.new(rows)
-    @guard = Guard.new(@grid, @grid.find_guard_position)
+    @starting_guard_position = @grid.find_guard_position
+  end
+
+  def variations_with_loop_count
+    grid.each_variation.count do |grid|
+      guard = Guard.new(grid, starting_guard_position)
+      guard.walk
+      guard.in_loop?
+    end
   end
 end
 
 rows = input.map(&:chars)
 map = Map.new(rows)
-map.walk
-p map.visited_position_count # 5162
+p map.variations_with_loop_count # 5162

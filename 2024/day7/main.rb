@@ -1,34 +1,15 @@
 require "active_support/all"
 
-def match?(equation)
+def match?(operators, equation)
   left_total, numbers = equation.split(":")
   left_total = left_total.to_i
   numbers = numbers.split.map(&:to_i)
-  operator_permutations = %i[+ *].repeated_permutation(numbers.count - 1)
+  operator_permutations = operators.repeated_permutation(numbers.count - 1)
   operator_permutations.any? do |operator_permutation|
     first, *rest = numbers
     right_total = first
     operator_permutation.zip(rest).each do |operator, number|
-      right_total = right_total.send(operator, number)
-    end
-    right_total == left_total
-  end
-end
-
-def match_improved?(equation)
-  left_total, numbers = equation.split(":")
-  left_total = left_total.to_i
-  numbers = numbers.split.map(&:to_i)
-  operator_permutations = %i[+ * ||].repeated_permutation(numbers.count - 1)
-  operator_permutations.any? do |operator_permutation|
-    first, *rest = numbers
-    right_total = first
-    operator_permutation.zip(rest).each do |operator, number|
-      right_total = if operator == :"||"
-                      (right_total.to_s + number.to_s).to_i
-                    else
-                      right_total.send(operator, number)
-                    end
+      right_total = operator.call(right_total, number)
     end
     right_total == left_total
   end
@@ -40,12 +21,21 @@ end
 
 equations = File.readlines("input.txt").map(&:chomp)
 
+operators = [
+  ->(a, b) { a + b },
+  ->(a, b) { a * b },
+]
 result = equations
-  .select { |e| match?(e) }
+  .select { |e| match?(operators, e) }
   .sum { |e| total_of(e) }
 p result # 1430271835320
 
+operators = [
+  ->(a, b) { a + b },
+  ->(a, b) { a * b },
+  ->(a, b) { (a.to_s + b.to_s).to_i },
+]
 result = equations
-  .select { |e| match_improved?(e) }
+  .select { |e| match?(operators, e) }
   .sum { |e| total_of(e) }
 p result # 456565678667482

@@ -117,6 +117,8 @@ class Grid < Struct.new(:rows)
   end
 
   def content_of(position)
+    return unless include?(position)
+
     rows.dig(position.row, position.col)
   end
 
@@ -149,4 +151,4 @@ end
 
 rows = input.map(&:chars)
 map = Map.new(rows)
-p map.variations_with_loop_count # 1912
+p map.variations_with_loop_count # 1909

@@ -2,18 +2,18 @@ require "active_support/all"
 
 input = File.readlines("input.txt").map(&:chomp)
 
-# input =
-#   "....#.....
-# .........#
-# ..........
-# ..#.......
-# .......#..
-# ..........
-# .#..^.....
-# ........#.
-# #.........
-# ......#...
-# ".split("\n")
+input =
+  "....#.....
+.........#
+..........
+..#.......
+.......#..
+..........
+.#..^.....
+........#.
+#.........
+......#...
+".split("\n")
 
 class Position < Struct.new(:row, :col)
   def next_position(bearing)
@@ -31,15 +31,17 @@ class Guard < Struct.new(:grid, :position, :directions)
     super(grid, position, %i[north east south west])
   end
 
-  def bearing
-    directions.first
-  end
-
   def walk
     while on_grid?
       turn_right while facing_obstacle?
       step
     end
+  end
+
+  private
+
+  def bearing
+    directions.first
   end
 
   def on_grid?
@@ -77,10 +79,6 @@ class Grid < Struct.new(:rows)
     content_of(position) == "#"
   end
 
-  def content_of(position)
-    rows.dig(position.row, position.col)
-  end
-
   def record_visit(position)
     rows[position.row][position.col] = "X"
   end
@@ -91,6 +89,12 @@ class Grid < Struct.new(:rows)
         return Position.new(row, col) if rows[row][col] == "^"
       end
     end
+  end
+
+  private
+
+  def content_of(position)
+    rows.dig(position.row, position.col)
   end
 end
 

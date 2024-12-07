@@ -4,6 +4,21 @@ def match?(equation)
   left_total, numbers = equation.split(":")
   left_total = left_total.to_i
   numbers = numbers.split.map(&:to_i)
+  operator_permutations = %i[+ *].repeated_permutation(numbers.count - 1)
+  operator_permutations.any? do |operator_permutation|
+    first, *rest = numbers
+    right_total = first
+    operator_permutation.zip(rest).each do |operator, number|
+      right_total = right_total.send(operator, number)
+    end
+    right_total == left_total
+  end
+end
+
+def match_improved?(equation)
+  left_total, numbers = equation.split(":")
+  left_total = left_total.to_i
+  numbers = numbers.split.map(&:to_i)
   operator_permutations = %i[+ * ||].repeated_permutation(numbers.count - 1)
   operator_permutations.any? do |operator_permutation|
     first, *rest = numbers
@@ -24,9 +39,13 @@ def total_of(equation)
 end
 
 equations = File.readlines("input.txt").map(&:chomp)
-result =
-  equations
-    .select { |e| match?(e) }
-    .sum { |e| total_of(e) }
 
-p result
+result = equations
+  .select { |e| match?(e) }
+  .sum { |e| total_of(e) }
+p result # 1430271835320
+
+result = equations
+  .select { |e| match_improved?(e) }
+  .sum { |e| total_of(e) }
+p result # 456565678667482

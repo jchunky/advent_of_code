@@ -1,139 +1,113 @@
 require "active_support/all"
 
-class Coord < Struct.new(:row, :col)
-  def adjacent_coord(direction)
-    case direction
-    when :north then Coord.new(row - 1, col)
-    when :east then Coord.new(row, col + 1)
-    when :south then Coord.new(row + 1, col)
-    when :west then Coord.new(row, col - 1)
+input = File.readlines("input.txt").map(&:chomp)
+
+input =
+  "....#.....
+.........#
+..........
+..#.......
+.......#..
+..........
+.#..^.....
+........#.
+#.........
+......#...
+".split("\n")
+
+class Position < Struct.new(:row, :col)
+  def next_position(bearing)
+    case bearing
+    when :north then Position.new(row - 1, col)
+    when :east then Position.new(row, col + 1)
+    when :south then Position.new(row + 1, col)
+    when :west then Position.new(row, col - 1)
+    end
+  end
+end
+
+class Guard < Struct.new(:grid, :position, :directions)
+  def initialize(grid, position)
+    super(grid, position, %i[north east south west])
+  end
+
+  def bearing
+    directions.first
+  end
+
+  def walk
+    while on_grid?
+      turn_right while facing_obstacle?
+      step
+    end
+  end
+
+  def on_grid?
+    grid.include?(position)
+  end
+
+  def turn_right
+    directions.rotate!
+  end
+
+  def facing_obstacle?
+    grid.obstacle_at?(next_position)
+  end
+
+  def step
+    grid.record_visit(position)
+    self.position = next_position
+  end
+
+  def next_position
+    position.next_position(bearing)
+  end
+end
+
+class Grid < Struct.new(:rows)
+  def visited_position_count
+    rows.join.count("X")
+  end
+
+  def include?(position)
+    (0...rows.size).cover?(position.row) && (0...rows.first.size).cover?(position.col)
+  end
+
+  def obstacle_at?(position)
+    content_of(position) == "#"
+  end
+
+  def content_of(position)
+    rows.dig(position.row, position.col)
+  end
+
+  def record_visit(position)
+    rows[position.row][position.col] = "X"
+  end
+
+  def find_guard_position
+    0.upto(rows.size - 1).each do |row|
+      0.upto(rows.first.size - 1).each do |col|
+        return Position.new(row, col) if rows[row][col] == "^"
+      end
     end
   end
 end
 
 class Map
-  attr_reader :grid, :bearing, :position, :initial_position, :has_cycle, :steps
+  attr_reader :grid, :guard
 
-  def initialize(grid, initial_position = find_guard(grid))
-    @grid = grid
-    @bearing = %i[north east south west]
-    @initial_position = initial_position
-    @position = initial_position
-    @steps = {}
-    @has_cycle = false
+  delegate :visited_position_count, to: :grid
+
+  def initialize(rows)
+    @grid = Grid.new(rows)
+    @guard = Guard.new(@grid, @grid.find_guard_position)
   end
 
-  def path_has_cycle?
-    walk_path
-    has_cycle?
-  end
-
-  def has_cycle?
-    has_cycle
-  end
-
-  def obstacle_at?(coord)
-    at_coord(coord) == "#"
-  end
-
-  def guard_at?(coord)
-    at_coord(coord) == "^"
-  end
-
-  def at_coord(coord)
-    grid.dig(coord.row, coord.col)
-  end
-
-  def each_coord
-    return enum_for(:each_coord) unless block_given?
-
-    (0...grid.size).each do |r|
-      (0...grid.first.size).each do |c|
-        yield(Coord.new(r, c))
-      end
-    end
-  end
-
-  def build_with_obstacle(coord)
-    new_grid = grid.map(&:dup)
-    new_grid[coord.row][coord.col] = "#"
-    Map.new(new_grid, initial_position)
-  end
-
-  private
-
-  def walk_path
-    until off_grid? || has_cycle?
-      turn_right while obstacle_in_front?
-      step
-    end
-  end
-
-  def off_grid?
-    !(0...grid.size).cover?(position.row) ||
-      !(0...grid.first.size).cover?(position.col)
-  end
-
-  def turn_right
-    bearing.rotate!
-  end
-
-  def obstacle_in_front?
-    obstacle_at?(next_position)
-  end
-
-  def step
-    @position = next_position
-    @has_cycle ||= steps.include?(current_step)
-    steps[current_step] = true
-  end
-
-  def current_step
-    [bearing.first, position.row, position.col].to_s
-  end
-
-  def next_position
-    position.adjacent_coord(bearing.first)
-  end
-
-  def find_guard(grid)
-    grid.size.times.each do |r|
-      grid.first.size.times.each do |c|
-        return Coord.new(r, c) if grid[r][c] == "^"
-      end
-    end
-  end
+  delegate :walk, to: :guard
 end
 
-class Main
-  def run
-    grid = File.readlines("input.txt").map(&:chomp).map(&:chars)
-
-    # grid =
-    #   "....#.....\n" \
-    #   ".........#\n" \
-    #   "..........\n" \
-    #   "..#.......\n" \
-    #   ".......#..\n" \
-    #   "..........\n" \
-    #   ".#..^.....\n" \
-    #   "........#.\n" \
-    #   "#.........\n" \
-    #   "......#...\n"
-    # grid = grid.split("\n").map(&:chars)
-
-    map = Map.new(grid)
-    obstruction_count =
-      map
-        .each_coord.reject { |coord|
-          map.obstacle_at?(coord) || map.guard_at?(coord)
-        }
-        .count do |coord|
-          print "."
-          map.build_with_obstacle(coord).path_has_cycle?
-        end
-    p obstruction_count
-  end
-end
-
-Main.new.run
+rows = input.map(&:chars)
+map = Map.new(rows)
+map.walk
+p map.visited_position_count

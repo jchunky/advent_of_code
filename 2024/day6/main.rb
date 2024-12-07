@@ -77,10 +77,8 @@ end
 
 class Grid < Struct.new(:rows)
   def find_guard_position
-    0.upto(rows.size - 1).each do |row|
-      0.upto(rows.first.size - 1).each do |col|
-        return Position.new(row, col) if rows[row][col] == "^"
-      end
+    each_position do |position|
+      return position if guard_at?(position)
     end
   end
 
@@ -95,15 +93,12 @@ class Grid < Struct.new(:rows)
   def each_variation
     return enum_for(:each_variation) unless block_given?
 
-    0.upto(rows.size - 1).each do |row|
-      0.upto(rows.first.size - 1).each do |col|
-        position = Position.new(row, col)
-        next unless !obstacle_at?(position) || !guard_at?(position)
+    each_position do |position|
+      next unless !obstacle_at?(position) || !guard_at?(position)
 
-        new_grid = dup
-        new_grid.place_obstacle_at(position)
-        yield(new_grid)
-      end
+      new_grid = dup
+      new_grid.place_obstacle_at(position)
+      yield(new_grid)
     end
   end
 
@@ -123,6 +118,15 @@ class Grid < Struct.new(:rows)
 
   def content_of(position)
     rows.dig(position.row, position.col)
+  end
+
+  def each_position
+    0.upto(rows.size - 1).each do |row|
+      0.upto(rows.first.size - 1).each do |col|
+        position = Position.new(row, col)
+        yield(position)
+      end
+    end
   end
 end
 

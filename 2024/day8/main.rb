@@ -58,6 +58,12 @@ class Grid < Struct.new(:rows)
   def include?(position)
     (0...rows.size).cover?(position.row) && (0...rows.first.size).cover?(position.col)
   end
+
+  def place_content_at(position, content)
+    return unless include?(position)
+
+    rows[position.row][position.col] = content
+  end
 end
 
 class AntennaGrid < Grid
@@ -79,9 +85,7 @@ class AntinodeGrid < Grid
   end
 
   def place_antinode_at(position)
-    return unless include?(position)
-
-    rows[position.row][position.col] = "#"
+    place_content_at(position, "#")
   end
 end
 

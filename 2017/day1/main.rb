@@ -2,5 +2,8 @@ require "active_support/all"
 
 input = File.read("input.txt").chomp
 
-input += input[0]
-p input.chars.each_cons(2).select { |a, b| a == b }.map(&:first).sum(&:to_i) # 1089
+p(
+  input.length.times
+    .select { |i| input[i] == input[(i + 1) % input.length] }
+    .sum { |i| input[i].to_i }
+) # 1089

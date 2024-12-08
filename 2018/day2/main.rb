@@ -1,17 +1,7 @@
 require "active_support/all"
 
-def required_wrapping_paper(line)
-  a, b, c = line.split("x").map(&:to_i).sort
-  (a * b) + (2 * ((a * b) + (b * c) + (c * a)))
-end
+lines = File.read("input.txt").split("\n")
 
-def required_ribbon(line)
-  a, b, c = line.split("x").map(&:to_i).sort
-  (2 * (a + b)) + (a * b * c)
-end
-
-lines = File.readlines("input.txt")
-
-p(lines.sum { |l| required_wrapping_paper(l) })
-
-p(lines.sum { |l| required_ribbon(l) })
+pairs = lines.count { |line| line.chars.tally.value?(2) }
+triples = lines.count { |line| line.chars.tally.value?(3) }
+p pairs * triples # 8610

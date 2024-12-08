@@ -1,17 +1,26 @@
 require "active_support/all"
 
-def required_wrapping_paper(line)
-  a, b, c = line.split("x").map(&:to_i).sort
-  (a * b) + (2 * ((a * b) + (b * c) + (c * a)))
-end
+rows = File.readlines("input.txt")
 
-def required_ribbon(line)
-  a, b, c = line.split("x").map(&:to_i).sort
-  (2 * (a + b)) + (a * b * c)
-end
+# rows = "5 1 9 5
+# 7 5 3
+# 2 4 6 8
+# ".split("\n")
 
-lines = File.readlines("input.txt")
+# rows = "5 9 2 8
+# 9 4 7 3
+# 3 8 6 5
+# ".split("\n")
 
-p(lines.sum { |l| required_wrapping_paper(l) })
+checksum = rows
+  .map { |row| row.split.map(&:to_i) }
+  .sum { |row| row.max - row.min }
+p checksum # 51139
 
-p(lines.sum { |l| required_ribbon(l) })
+checksum = rows
+  .map { |row| row.split.map(&:to_i) }
+  .sum do |row|
+    a, b = row.sort.combination(2).find { |a, b| b % a == 0 }
+    b / a
+  end
+p checksum # 272

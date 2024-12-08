@@ -1,17 +1,13 @@
 require "active_support/all"
+require "digest"
 
-def required_wrapping_paper(line)
-  a, b, c = line.split("x").map(&:to_i).sort
-  (a * b) + (2 * ((a * b) + (b * c) + (c * a)))
+input = "reyedfim"
+
+index = 0
+password = ""
+while password.length < 8
+  hash = Digest::MD5.hexdigest("#{input}#{index}")
+  password += hash[5] if hash.start_with?("00000")
+  index += 1
 end
-
-def required_ribbon(line)
-  a, b, c = line.split("x").map(&:to_i).sort
-  (2 * (a + b)) + (a * b * c)
-end
-
-lines = File.readlines("input.txt")
-
-p(lines.sum { |l| required_wrapping_paper(l) })
-
-p(lines.sum { |l| required_ribbon(l) })
+p password # f97c354d

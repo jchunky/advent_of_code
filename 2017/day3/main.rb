@@ -9,6 +9,10 @@ class Position < Struct.new(:row, :col)
     when :west then Position.new(row, col - 1)
     end
   end
+
+  def adjacent_positions
+    [-1, 0, 1].product([-1, 0, 1]).reject { |e| e == [0, 0] }.map { |r, c| Position.new(row + r, col + c) }
+  end
 end
 
 class Grid
@@ -67,3 +71,13 @@ grid = Grid.new
   vector.step
 end
 p [vector.position.row, vector.position.col].sum(&:abs) # 31, 430
+
+vector = Vector.new
+grid = Grid.new
+(1..).each do |index|
+  sum = index == 1 ? 1 : vector.position.adjacent_positions.sum { |p| grid.content_of(p) }
+  abort(sum.to_s) if sum > square_index # 312453
+  grid.place_content_at(vector.position, sum)
+  vector.turn_left unless grid.include?(vector.left_position)
+  vector.step
+end

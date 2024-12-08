@@ -1,17 +1,10 @@
 require "active_support/all"
 
-def required_wrapping_paper(line)
-  a, b, c = line.split("x").map(&:to_i).sort
-  (a * b) + (2 * ((a * b) + (b * c) + (c * a)))
-end
-
-def required_ribbon(line)
-  a, b, c = line.split("x").map(&:to_i).sort
-  (2 * (a + b)) + (a * b * c)
+def valid?(pass_phrase)
+  words = pass_phrase.chomp.split
+  words.count == words.uniq.count
 end
 
 lines = File.readlines("input.txt")
 
-p(lines.sum { |l| required_wrapping_paper(l) })
-
-p(lines.sum { |l| required_ribbon(l) })
+p(lines.count { |l| valid?(l) }) # 451

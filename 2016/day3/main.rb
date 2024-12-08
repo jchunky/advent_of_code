@@ -1,17 +1,29 @@
 require "active_support/all"
 
-def required_wrapping_paper(line)
-  a, b, c = line.split("x").map(&:to_i).sort
-  (a * b) + (2 * ((a * b) + (b * c) + (c * a)))
-end
-
-def required_ribbon(line)
-  a, b, c = line.split("x").map(&:to_i).sort
-  (2 * (a + b)) + (a * b * c)
-end
-
 lines = File.readlines("input.txt")
+# lines = "101 301 501
+# 102 302 502
+# 103 303 503
+# 201 401 601
+# 202 402 602
+# 203 403 603
+# ".split("\n")
 
-p(lines.sum { |l| required_wrapping_paper(l) })
+possible_triangle_count =
+  lines.count do |line|
+    a, b, c = line.split.map(&:to_i).sort
+    a + b > c
+  end
+p possible_triangle_count
 
-p(lines.sum { |l| required_ribbon(l) })
+possible_triangle_count =
+  lines
+    .map { |line| line.split.map(&:to_i) }
+    .transpose
+    .sum do |column|
+      column.each_slice(3).count do |triple|
+        a, b, c = triple.sort
+        a + b > c
+      end
+    end
+p possible_triangle_count

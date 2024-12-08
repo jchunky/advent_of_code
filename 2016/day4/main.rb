@@ -1,17 +1,26 @@
 require "active_support/all"
 
-def required_wrapping_paper(line)
-  a, b, c = line.split("x").map(&:to_i).sort
-  (a * b) + (2 * ((a * b) + (b * c) + (c * a)))
-end
+class Room < Struct.new(:encrypted_name, :sector_id_string, :checksum)
+  def initialize(line)
+    args = line.chomp.delete("-").scan(/([a-z]+)(\d+)\[([a-z]+)\]/).flatten
+    super(*args)
+  end
 
-def required_ribbon(line)
-  a, b, c = line.split("x").map(&:to_i).sort
-  (2 * (a + b)) + (a * b * c)
+  def real?
+    chars = encrypted_name.chars
+    tally = chars.tally
+    most_common_letters = chars.uniq.max_by(5) { |char| [tally[char], -char.ord] }.join
+    checksum == most_common_letters
+  end
+
+  def sector_id
+    sector_id_string.to_i
+  end
 end
 
 lines = File.readlines("input.txt")
-
-p(lines.sum { |l| required_wrapping_paper(l) })
-
-p(lines.sum { |l| required_ribbon(l) })
+sector_id_sum = lines
+  .map { |line| Room.new(line) }
+  .select(&:real?)
+  .sum(&:sector_id)
+p sector_id_sum

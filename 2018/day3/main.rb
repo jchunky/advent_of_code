@@ -8,6 +8,7 @@ lines = File.read("input.txt").split("\n")
 # ".split("\n")
 
 grid = []
+claims = []
 
 lines.each do |line|
   _, id, col, row, width, height = line.split(/[#@,:x]/).map(&:to_i)
@@ -15,9 +16,18 @@ lines.each do |line|
   row.upto(row + height - 1).each do |r|
     col.upto(col + width - 1).each do |c|
       grid[r] ||= []
-      grid[r][c] = grid[r][c] ? "X" : "C"
+      if grid[r][c]
+        claims << grid[r][c] if grid[r][c] != "X"
+        claims << id
+        grid[r][c] = "X"
+      else
+        grid[r][c] = id
+      end
     end
   end
 end
 
-p grid.join.count("X")
+p grid.flatten.count("X") # 103482
+
+claims = claims.uniq
+p(grid.flatten.uniq.reject { |e| e == "X" || e.nil? || claims.include?(e) }) # 686

@@ -29,12 +29,6 @@ input = File.readlines("input.txt").map(&:chomp)
 # ".split("\n")
 
 class Position < Struct.new(:row, :col)
-  def antinode(other)
-    row_delta = other.row - row
-    col_delta = other.col - col
-    Position.new(other.row + row_delta, other.col + col_delta)
-  end
-
   def delta(other)
     Position.new(other.row - row, other.col - col)
   end
@@ -110,7 +104,9 @@ class Map
 
   def record_antinodes(positions)
     positions.permutation(2).each do |a, b|
-      antinodes.place_antinode_at(a.antinode(b))
+      delta = a.delta(b)
+      antinode = b + delta
+      antinodes.place_antinode_at(antinode)
     end
   end
 

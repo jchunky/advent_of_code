@@ -1,17 +1,22 @@
 require "active_support/all"
 
-def required_wrapping_paper(line)
-  a, b, c = line.split("x").map(&:to_i).sort
-  (a * b) + (2 * ((a * b) + (b * c) + (c * a)))
-end
-
-def required_ribbon(line)
-  a, b, c = line.split("x").map(&:to_i).sort
-  (2 * (a + b)) + (a * b * c)
-end
-
 lines = File.readlines("input.txt")
 
-p(lines.sum { |l| required_wrapping_paper(l) })
+# lines = "0
+# 3
+# 0
+# 1
+# -3
+# ".split("\n")
 
-p(lines.sum { |l| required_ribbon(l) })
+instructions = lines.map(&:to_i)
+position = 0
+steps = 0
+
+loop do
+  jump = instructions[position]
+  instructions[position] += 1
+  position += jump
+  steps += 1
+  abort(steps.to_s) unless (0...instructions.count).cover?(position) # 5, 355965
+end

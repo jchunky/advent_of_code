@@ -98,4 +98,4 @@ end
 
 rows = input.map(&:chars)
 map = Map.new(rows)
-p map.antinode_count
+p map.antinode_count # 381

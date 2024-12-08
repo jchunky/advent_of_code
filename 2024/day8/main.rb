@@ -83,7 +83,6 @@ class Map
     antennas.antenna_positions_by_frequency.each do |_frequency, positions|
       record_antinodes(positions)
     end
-
     antinodes.antinode_count
   end
 

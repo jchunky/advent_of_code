@@ -8,7 +8,7 @@ p(
     digits.each_cons(2).any? { |a, b| a == b } &&
     digits == digits.sort
   end
-)
+) # 1330
 
 p(
   input.count do |n|
@@ -21,4 +21,4 @@ p(
     ) &&
     digits == digits.sort
   end
-)
+) # 876

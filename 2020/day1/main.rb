@@ -1,13 +1,5 @@
 require "active_support/all"
 
-lines = File.read("input.txt")
+lines = File.read("input.txt").split("\n")
 
-p eval(lines.delete("\n")) # 587
-
-frequency = 0
-seen = {}
-lines.split("\n").map(&:to_i).cycle.each do |delta|
-  frequency += delta
-  abort(frequency.to_s) if seen.include?(frequency)
-  seen[frequency] = true
-end
+p lines.map(&:to_i).combination(2).find { |a, b| a + b == 2020 }.reduce(:*)

@@ -1,8 +1,17 @@
 require "active_support/all"
 
-first, second = File.readlines("input.txt").map(&:split).transpose
-first, second = [first, second].map { |e| e.map(&:to_i) }.map(&:sort)
+input = File.read("input.txt")
+input = "2333133121414131402"
 
-p(first.zip(second).sum { |a, b| (a - b).abs })
+# 00...111...2...333.44.5555.6666.777.888899
 
-p(first.sum { |n| n * second.count(n) })
+array =
+  input.chars.flat_map.with_index do |char, i|
+    if i.even?
+      [i / 2] * char.to_i
+    else
+      ["."] * char.to_i
+    end
+  end
+
+p array

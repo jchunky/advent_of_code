@@ -1,5 +1,6 @@
 require "active_support/all"
 
-lines = File.readlines("input.txt")
+input = File.read("input.txt")
+lines = input.split("\n")
 
 p lines

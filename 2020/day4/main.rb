@@ -1,13 +1,9 @@
 require "active_support/all"
 
-lines = File.read("input.txt")
+passports = File.read("input.txt").split("\n\n").map { |passport| passport.tr("\n", " ") }
 
-p eval(lines.delete("\n")) # 587
-
-frequency = 0
-seen = {}
-lines.split("\n").map(&:to_i).cycle.each do |delta|
-  frequency += delta
-  abort(frequency.to_s) if seen.include?(frequency)
-  seen[frequency] = true
-end
+p(
+  passports.count do |passport|
+    (passport.scan(/(\w{3}):/).flatten - ["cid"]).sort == %w[byr iyr eyr hgt hcl ecl pid].sort
+  end
+)

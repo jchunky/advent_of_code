@@ -14,11 +14,9 @@ p(
   input.count do |n|
     digits = n.to_s.chars
 
-    (
-      (digits[0] == digits[1] && digits[1] != digits[2]) ||
-      (digits[-3] != digits[-2] && digits[-2] == digits[-1]) ||
-      digits.count.times.any? { |i| digits[i] != digits[i + 1] && digits[i + 1] == digits[i + 2] && digits[i + 2] != digits[i + 3] }
-    ) &&
-    digits == digits.sort
+    digits.dup.prepend(nil).append(nil).each_cons(4).any? do |a, b, c, d|
+      a != b && b == c && c != d
+    end &&
+    (digits == digits.sort)
   end
 ) # 876

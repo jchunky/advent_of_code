@@ -17,10 +17,6 @@ input = File.readlines("input.txt").map(&:chomp)
 # ".split("\n")
 
 class Guard < Walker
-  def initialize(grid, position)
-    super(grid, position)
-  end
-
   def walk
     while on_grid?
       turn_right while facing_obstacle?

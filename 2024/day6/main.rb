@@ -20,10 +20,6 @@ class MyGrid < Grid
     find_content("^")
   end
 
-  def obstacle_at?(position)
-    content_at?("#", position)
-  end
-
   def each_variation
     return enum_for(:each_variation) unless block_given?
 
@@ -42,12 +38,12 @@ class MyGrid < Grid
 
   private
 
-  def guard_at?(position)
-    content_at?("^", position)
+  def obstacle_at?(position)
+    content_at?("#", position)
   end
 
-  def dup
-    MyGrid.new(rows.map(&:dup))
+  def guard_at?(position)
+    content_at?("^", position)
   end
 end
 

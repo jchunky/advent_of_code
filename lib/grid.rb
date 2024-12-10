@@ -28,7 +28,7 @@ class Grid < Struct.new(:rows)
   end
 
   def dup
-    Grid.new(rows.map(&:dup))
+    self.class.new(rows.map(&:dup))
   end
 
   def each_position

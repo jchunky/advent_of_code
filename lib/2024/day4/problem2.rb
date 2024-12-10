@@ -1,8 +1,22 @@
 module Year2024
   module Day4
     class Problem2 < Problem
+      def self.test_input
+        "MMMSXXMASM
+MSAMXMSMSA
+AMXSXMAAMM
+MSAMASMSMX
+XMASAMXAMM
+XXAMMXXAMA
+SMSMSASXSS
+SAXAMASAAA
+MAMMMXMMMM
+MXMXAXMASX
+"
+      end
+
       def self.test_result
-        2046
+        9
       end
 
       def result

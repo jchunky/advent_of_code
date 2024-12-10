@@ -28,13 +28,14 @@ class Guard < Walker
     end
   end
 
-  def facing_obstacle?
-    facing_content?("#")
+  def record_visit
+    visit = [position.row, position.col].to_s
+    visits[visit] = true
   end
 
-  def step
-    grid.record_visit(position)
-    super
+
+  def facing_obstacle?
+    facing_content?("#")
   end
 end
 
@@ -59,7 +60,7 @@ end
 class Map
   attr_reader :grid, :guard
 
-  delegate :visited_position_count, to: :grid
+  delegate :visit_count, to: :guard
   delegate :walk, to: :guard
 
   def initialize(rows)
@@ -71,4 +72,4 @@ end
 rows = input.map(&:chars)
 map = Map.new(rows)
 map.walk
-p map.visited_position_count # 5162
+p map.visit_count # 5162

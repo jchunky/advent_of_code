@@ -1,8 +1,26 @@
 module Year2022
   module Day1
     class Problem2 < Problem
+      def self.test_input
+        "1000
+2000
+3000
+
+4000
+
+5000
+6000
+
+7000
+8000
+9000
+
+10000
+"
+      end
+
       def self.test_result
-        211189
+        45000
       end
 
       def result

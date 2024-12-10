@@ -1,6 +1,6 @@
 class Position < Struct.new(:row, :col)
-  def move(direction)
-    case direction
+  def next_position(bearing)
+    case bearing
     when :north then Position.new(row - 1, col)
     when :east then Position.new(row, col + 1)
     when :south then Position.new(row + 1, col)

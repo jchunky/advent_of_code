@@ -13,14 +13,14 @@ class Vector < Struct.new(:position, :directions)
   end
 
   def step
-    self.position = position.move(direction)
+    self.position = position.next_position(bearing)
   end
 
   def dup
     Vector.new(position.dup, directions.dup)
   end
 
-  def direction
+  def bearing
     directions.first
   end
 end

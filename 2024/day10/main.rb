@@ -13,24 +13,44 @@ input = File.read("input.txt").chomp
 
 class Trailhead < Struct.new(:map, :starting_position)
   def score
-    trail_count
+    destination_count
+  end
+
+  def rating
+    distinct_trail_count
   end
 
   private
 
-  def trail_count
-    destinations = paths(starting_position, 0)
+  def destination_count
+    destinations = destination_paths(starting_position, 0)
     destinations.uniq.count
   end
 
-  def paths(position, elevation)
+  def destination_paths(position, elevation)
     return position if elevation == 9
 
     position.orthogonally_adjacent_positions.map { |adjacent_position|
       if map.content_at?(elevation + 1, adjacent_position)
-        paths(adjacent_position, elevation + 1)
+        destination_paths(adjacent_position, elevation + 1)
       end
     }.flatten.compact
+  end
+
+  def distinct_trail_count
+    distinct_trail_paths(starting_position, 0)
+  end
+
+  def distinct_trail_paths(position, elevation)
+    return 1 if elevation == 9
+
+    position.orthogonally_adjacent_positions.sum do |adjacent_position|
+      if map.content_at?(elevation + 1, adjacent_position)
+        distinct_trail_paths(adjacent_position, elevation + 1)
+      else
+        0
+      end
+    end
   end
 end
 
@@ -43,6 +63,10 @@ class Map < Grid
     trailheads.sum(&:score)
   end
 
+  def trailhead_rating_sum
+    trailheads.sum(&:rating)
+  end
+
   private
 
   def trailheads
@@ -50,4 +74,6 @@ class Map < Grid
   end
 end
 
-p Map.new(input).trailhead_score_sum # 514
+p Map.new(input).trailhead_score_sum # 36, 514
+
+p Map.new(input).trailhead_rating_sum # 81, 1162

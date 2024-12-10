@@ -51,6 +51,20 @@ class MyGrid < Grid
   end
 end
 
+class Guard < Walker
+  def walk
+    while on_grid? && !in_loop?
+      record_visit
+      turn_right while facing_obstacle?
+      step while on_grid? && !facing_obstacle?
+    end
+  end
+
+  def facing_obstacle?
+    facing_content?("#")
+  end
+end
+
 class Map
   attr_reader :grid, :starting_guard_position
 
@@ -62,7 +76,7 @@ class Map
   def variations_with_loop_count
     grid.each_variation.with_index.count do |grid, i|
       print "." if i % grid.rows.size == 0
-      guard = Walker.new(grid, starting_guard_position)
+      guard = Guard.new(grid, starting_guard_position)
       guard.walk
       guard.in_loop?
     end

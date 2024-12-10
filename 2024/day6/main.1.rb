@@ -1,4 +1,5 @@
 require "active_support/all"
+require_relative "../../lib/utils"
 
 input = File.readlines("input.txt").map(&:chomp)
 
@@ -15,20 +16,9 @@ input = File.readlines("input.txt").map(&:chomp)
 # ......#...
 # ".split("\n")
 
-class Position < Struct.new(:row, :col)
-  def next_position(bearing)
-    case bearing
-    when :north then Position.new(row - 1, col)
-    when :east then Position.new(row, col + 1)
-    when :south then Position.new(row + 1, col)
-    when :west then Position.new(row, col - 1)
-    end
-  end
-end
-
-class Guard < Struct.new(:grid, :position, :directions)
+class Guard < Walker
   def initialize(grid, position)
-    super(grid, position, %i[north east south west])
+    super(grid, position)
   end
 
   def walk
@@ -38,63 +28,31 @@ class Guard < Struct.new(:grid, :position, :directions)
     end
   end
 
-  private
-
-  def on_grid?
-    grid.include?(position)
-  end
-
-  def turn_right
-    directions.rotate!
-  end
-
   def facing_obstacle?
-    grid.obstacle_at?(next_position)
+    facing_content?("#")
   end
 
   def step
     grid.record_visit(position)
-    self.position = next_position
-  end
-
-  def next_position
-    position.next_position(bearing)
-  end
-
-  def bearing
-    directions.first
+    super
   end
 end
 
-class Grid < Struct.new(:rows)
+class MyGrid < Grid
   def record_visit(position)
-    rows[position.row][position.col] = "X"
+    place_content_at("X", position)
   end
 
   def find_guard_position
-    0.upto(rows.size - 1).each do |row|
-      0.upto(rows.first.size - 1).each do |col|
-        return Position.new(row, col) if rows[row][col] == "^"
-      end
-    end
+    find_content("^")
   end
 
   def visited_position_count
     rows.join.count("X")
   end
 
-  def include?(position)
-    (0...rows.size).cover?(position.row) && (0...rows.first.size).cover?(position.col)
-  end
-
   def obstacle_at?(position)
-    content_of(position) == "#"
-  end
-
-  private
-
-  def content_of(position)
-    rows.dig(position.row, position.col)
+    content_at?("#", position)
   end
 end
 
@@ -105,7 +63,7 @@ class Map
   delegate :walk, to: :guard
 
   def initialize(rows)
-    @grid = Grid.new(rows)
+    @grid = MyGrid.new(rows)
     @guard = Guard.new(@grid, @grid.find_guard_position)
   end
 end

@@ -1,21 +1,11 @@
 class Walker < Struct.new(:grid, :position, :directions, :loop_found, :visits)
-  def initialize(grid, position)
-    super(grid, position, %i[north east south west], false, {})
-  end
-
-  def walk
-    while on_grid? && !in_loop?
-      record_visit
-      turn_right while facing_obstacle?
-      step while on_grid? && !facing_obstacle?
-    end
+  def initialize(grid, position, directions = %i[north east south west])
+    super(grid, position, directions, false, {})
   end
 
   def in_loop?
     loop_found
   end
-
-  private
 
   def record_visit
     visit = [position.row, position.col, bearing].to_s
@@ -31,8 +21,8 @@ class Walker < Struct.new(:grid, :position, :directions, :loop_found, :visits)
     directions.rotate!
   end
 
-  def facing_obstacle?
-    grid.obstacle_at?(next_position)
+  def facing_content?(content)
+    grid.content_at?(content, next_position)
   end
 
   def step

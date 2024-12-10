@@ -21,12 +21,12 @@ loop do
 end
 p(array.map.with_index { |value, index| value.to_i * index }.sum) # 1928, 6307275788409
 
-p array.size
 array =
   input.chars.flat_map.with_index do |char, i|
     (i.even? ? [i / 2] : ["."]) * char.to_i
   end
 tally = array.tally
+p tally.size
 (array.uniq - ["."]).reverse_each.with_index do |file_id, i|
   print "." if i % 1000 == 0
   file_position = array.index(file_id)

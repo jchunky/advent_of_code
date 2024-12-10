@@ -5,10 +5,15 @@ Dir.chdir("spec")
 Dir["../lib/utils/*.rb"].each { |file| require_relative(file) }
 Dir["../lib/**/*.rb"].each { |file| require_relative(file) }
 
+RSpec.configure do |config|
+  config.profile_examples = true
+end
+
 describe "problems" do
   it "are solved" do
     problems = Dir["../lib/**/problem?.rb"]
     problems.each do |problem|
+      p problem
       clazz = class_of(problem)
       input =
         if clazz.respond_to?(:test_input)

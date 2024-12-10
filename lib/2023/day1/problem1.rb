@@ -1,8 +1,16 @@
 module Year2023
   module Day1
     class Problem1 < Problem
+      def self.test_input
+        "1abc2
+pqr3stu8vwx
+a1b2c3d4e5f
+treb7uchet
+"
+      end
+
       def self.test_result
-        54159
+        142
       end
 
       def result

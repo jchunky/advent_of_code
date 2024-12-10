@@ -21,8 +21,20 @@ module Year2023
         "8" => 8,
         "9" => 9,
       }
+
+      def self.test_input
+        "two1nine
+eightwothree
+abcone2threexyz
+xtwone3four
+4nineeightseven2
+zoneight234
+7pqrstsixteen
+"
+      end
+
       def self.test_result
-        53866
+        281
       end
 
       def result

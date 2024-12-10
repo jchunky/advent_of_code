@@ -43,4 +43,4 @@ tally = array.tally
     array[i] = "."
   end
 end
-p(array.map.with_index { |value, index| value.to_i * index }.sum) # 2858,
+p(array.map.with_index { |value, index| value.to_i * index }.sum) # 2858, 6327174563252

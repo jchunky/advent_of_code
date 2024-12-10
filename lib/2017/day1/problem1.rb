@@ -1,8 +1,12 @@
 module Year2017
   module Day1
     class Problem1 < Problem
+      def self.test_input
+        "91212129"
+      end
+
       def self.test_result
-        1089
+        9
       end
 
       def result

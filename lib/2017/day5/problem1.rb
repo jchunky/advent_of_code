@@ -1,8 +1,17 @@
 module Year2017
   module Day5
     class Problem1 < Problem
+      def self.test_input
+        "0
+3
+0
+1
+-3
+"
+      end
+
       def self.test_result
-        355965
+        5
       end
 
       def result

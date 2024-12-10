@@ -1,8 +1,6 @@
 class Grid < Struct.new(:rows)
   def find_content(content)
-    each_position do |position|
-      return position if content_of(position) == content
-    end
+    each_position.find { |position| content_of(position) == content }
   end
 
   def find_all(content)

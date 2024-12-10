@@ -7,6 +7,7 @@ module Year2016
 
       def result
         return "f97c354d" # skip expensive calculation for tests
+
         input = "reyedfim"
         index = 0
         password = ""

@@ -1,8 +1,15 @@
 module Year2019
   module Day1
     class Problem2 < Problem
+      def self.test_input
+        "14
+1969
+100756
+"
+      end
+
       def self.test_result
-        5097039
+        51314
       end
 
       def result

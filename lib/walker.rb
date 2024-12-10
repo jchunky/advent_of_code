@@ -3,8 +3,17 @@ class Walker < Struct.new(:grid, :position, :directions, :loop_found, :visits)
     super(grid, position, directions, false, {})
   end
 
-  def in_loop?
-    loop_found
+  def facing_content?(content)
+    grid.content_at?(content, next_position)
+  end
+
+  def turn_right
+    directions.rotate!
+  end
+
+  def step
+    record_visit
+    self.position = next_position
   end
 
   def record_visit
@@ -13,27 +22,23 @@ class Walker < Struct.new(:grid, :position, :directions, :loop_found, :visits)
     visits[visit] = true
   end
 
-  def on_grid?
-    grid.include?(position)
-  end
-
-  def turn_right
-    directions.rotate!
-  end
-
-  def facing_content?(content)
-    grid.content_at?(content, next_position)
-  end
-
-  def step
-    self.position = next_position
-  end
-
   def next_position
     position.next_position(bearing)
   end
 
   def bearing
     directions.first
+  end
+
+  def visit_count
+    visits.count
+  end
+
+  def in_loop?
+    loop_found
+  end
+
+  def on_grid?
+    grid.include?(position)
   end
 end

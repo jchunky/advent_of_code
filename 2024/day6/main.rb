@@ -54,7 +54,6 @@ end
 class Guard < Walker
   def walk
     while on_grid? && !in_loop?
-      record_visit
       turn_right while facing_obstacle?
       step while on_grid? && !facing_obstacle?
     end

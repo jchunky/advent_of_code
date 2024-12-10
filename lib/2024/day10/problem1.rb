@@ -53,21 +53,24 @@ module Year2024
     end
 
     class Problem1 < Problem
+      def self.test_input
+        "89010123
+78121874
+87430965
+96549874
+45678903
+32019012
+01329801
+10456732
+"
+      end
+
       def self.test_result
-        514
+        36
       end
 
       def result
-        # input = "89010123
-        # 78121874
-        # 87430965
-        # 96549874
-        # 45678903
-        # 32019012
-        # 01329801
-        # 10456732"
-
-        Map.new(input).trailhead_score_sum # 36, 514
+        Map.new(input).trailhead_score_sum
       end
     end
   end

@@ -1,4 +1,5 @@
 require "active_support/all"
+# require_relative "../../lib/utils"
 
 input = File.readlines("input.txt").map(&:chomp)
 

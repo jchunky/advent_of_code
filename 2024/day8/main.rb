@@ -1,4 +1,5 @@
 require "active_support/all"
+require_relative "../../lib/utils"
 
 input = File.readlines("input.txt").map(&:chomp)
 
@@ -27,44 +28,6 @@ input = File.readlines("input.txt").map(&:chomp)
 # ..........
 # ..........
 # ".split("\n")
-
-class Position < Struct.new(:row, :col)
-  def delta(other)
-    Position.new(other.row - row, other.col - col)
-  end
-
-  def +(delta)
-    Position.new(row + delta.row, col + delta.col)
-  end
-end
-
-class Grid < Struct.new(:rows)
-  def each_position
-    return enum_for(:each_position) unless block_given?
-
-    0.upto(rows.size - 1).each do |row|
-      0.upto(rows.first.size - 1).each do |col|
-        yield Position.new(row, col)
-      end
-    end
-  end
-
-  def content_of(position)
-    return unless include?(position)
-
-    rows.dig(position.row, position.col)
-  end
-
-  def include?(position)
-    (0...rows.size).cover?(position.row) && (0...rows.first.size).cover?(position.col)
-  end
-
-  def place_content_at(position, content)
-    return unless include?(position)
-
-    rows[position.row][position.col] = content
-  end
-end
 
 class AntennaGrid < Grid
   def antenna_positions_by_frequency

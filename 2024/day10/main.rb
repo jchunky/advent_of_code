@@ -13,7 +13,25 @@ input = "89010123
 
 class Trailhead < Struct.new(:map, :starting_position)
   def score
-    0
+    trail_count
+  end
+
+  private
+
+  def trail_count
+    paths(starting_position, 0)
+  end
+
+  def paths(position, elevation)
+    return 1 if elevation == 9
+
+    position.orthogonally_adjacent_positions.sum do |adjacent_position|
+      if map.content_at?(elevation + 1, adjacent_position)
+        paths(adjacent_position, elevation + 1)
+      else
+        0
+      end
+    end
   end
 end
 
@@ -25,6 +43,8 @@ class Map < Grid
   def trailhead_score_sum
     trailheads.sum(&:score)
   end
+
+  private
 
   def trailheads
     find_all(0).map { |starting_position| Trailhead.new(self, starting_position) }

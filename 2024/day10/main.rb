@@ -2,14 +2,14 @@ require "active_support/all"
 require "../../lib/utils"
 
 input = File.read("input.txt").chomp
-input = "89010123
-78121874
-87430965
-96549874
-45678903
-32019012
-01329801
-10456732"
+# input = "89010123
+# 78121874
+# 87430965
+# 96549874
+# 45678903
+# 32019012
+# 01329801
+# 10456732"
 
 class Trailhead < Struct.new(:map, :starting_position)
   def score
@@ -50,4 +50,4 @@ class Map < Grid
   end
 end
 
-p Map.new(input).trailhead_score_sum
+p Map.new(input).trailhead_score_sum # 514

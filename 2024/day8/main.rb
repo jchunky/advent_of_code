@@ -48,7 +48,7 @@ class AntinodeGrid < Grid
   end
 
   def place_antinode_at(position)
-    place_content_at(position, "#")
+    place_content_at("#", position)
   end
 end
 

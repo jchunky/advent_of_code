@@ -1,5 +1,5 @@
 require "active_support/all"
-# require_relative "../../lib/utils"
+require_relative "../../lib/utils"
 
 input = File.readlines("input.txt").map(&:chomp)
 
@@ -14,17 +14,6 @@ input = "....#.....
 #.........
 ......#...
 ".split("\n")
-
-class Position < Struct.new(:row, :col)
-  def next_position(bearing)
-    case bearing
-    when :north then Position.new(row - 1, col)
-    when :east then Position.new(row, col + 1)
-    when :south then Position.new(row + 1, col)
-    when :west then Position.new(row, col - 1)
-    end
-  end
-end
 
 class Guard < Struct.new(:grid, :position, :directions, :loop_found, :visits)
   def initialize(grid, position)
@@ -76,19 +65,13 @@ class Guard < Struct.new(:grid, :position, :directions, :loop_found, :visits)
   end
 end
 
-class Grid < Struct.new(:rows)
+class MyGrid < Grid
   def find_guard_position
-    each_position do |position|
-      return position if guard_at?(position)
-    end
-  end
-
-  def include?(position)
-    (0...rows.size).cover?(position.row) && (0...rows.first.size).cover?(position.col)
+    find_content("^")
   end
 
   def obstacle_at?(position)
-    content_of(position) == "#"
+    content_at?("#", position)
   end
 
   def each_variation
@@ -104,31 +87,17 @@ class Grid < Struct.new(:rows)
   end
 
   def place_obstacle_at(position)
-    rows[position.row][position.col] = "#"
-  end
-
-  def dup
-    Grid.new(rows.map(&:dup))
+    place_content_at("#", position)
   end
 
   private
 
   def guard_at?(position)
-    content_of(position) == "^"
+    content_at?("^", position)
   end
 
-  def content_of(position)
-    return unless include?(position)
-
-    rows.dig(position.row, position.col)
-  end
-
-  def each_position
-    0.upto(rows.size - 1).each do |row|
-      0.upto(rows.first.size - 1).each do |col|
-        yield Position.new(row, col)
-      end
-    end
+  def dup
+    MyGrid.new(rows.map(&:dup))
   end
 end
 
@@ -136,7 +105,7 @@ class Map
   attr_reader :grid, :starting_guard_position
 
   def initialize(rows)
-    @grid = Grid.new(rows)
+    @grid = MyGrid.new(rows)
     @starting_guard_position = @grid.find_guard_position
   end
 

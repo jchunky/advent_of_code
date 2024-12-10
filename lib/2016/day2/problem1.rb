@@ -14,11 +14,6 @@ module Year2016
         end
 
         def initialize(lines, buttons, row:, col:)
-          #     lines = "ULL
-          # RRDDD
-          # LURDL
-          # UUUUD
-          # "
           super(lines, buttons, row, col)
         end
 
@@ -37,8 +32,15 @@ module Year2016
         end
       end
 
+      def self.test_input
+        "ULL
+RRDDD
+LURDL
+UUUUD"
+      end
+
       def self.test_result
-        "78985"
+        "1985"
       end
 
       def result

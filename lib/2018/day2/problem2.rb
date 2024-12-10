@@ -1,8 +1,18 @@
 module Year2018
   module Day2
     class Problem2 < Problem
+      def self.test_input
+        "abcde
+fghij
+klmno
+pqrst
+fguij
+axcye
+wvxyz"
+      end
+
       def self.test_result
-        "iosnxmfkpabcjpdywvrtahluy"
+        "fgij"
       end
 
       def result

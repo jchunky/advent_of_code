@@ -27,6 +27,11 @@ class Trailhead < Struct.new(:map, :starting_position)
     destinations.uniq.count
   end
 
+  def distinct_trail_count
+    destinations = find_destinations(starting_position, 0)
+    destinations.count
+  end
+
   def find_destinations(position, elevation)
     return position if elevation == 9
 
@@ -35,22 +40,6 @@ class Trailhead < Struct.new(:map, :starting_position)
         find_destinations(adjacent_position, elevation + 1)
       end
     }.flatten.compact
-  end
-
-  def distinct_trail_count
-    find_distinct_trails(starting_position, 0)
-  end
-
-  def find_distinct_trails(position, elevation)
-    return 1 if elevation == 9
-
-    position.orthogonally_adjacent_positions.sum do |adjacent_position|
-      if map.content_at?(elevation + 1, adjacent_position)
-        find_distinct_trails(adjacent_position, elevation + 1)
-      else
-        0
-      end
-    end
   end
 end
 

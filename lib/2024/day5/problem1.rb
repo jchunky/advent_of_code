@@ -45,7 +45,6 @@ module Year2024
         updates
           .select { |u| correct?(rules, u) }
           .sum { |u| middle(u) }
-        # 5588
       end
 
       def correct?(rules, update)

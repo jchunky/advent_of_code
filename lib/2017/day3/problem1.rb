@@ -19,7 +19,7 @@ module Year2017
           vector.turn_left unless grid.include?(vector.left_position)
           vector.step
         end
-        [vector.position.row, vector.position.col].sum(&:abs) # 31, 430
+        [vector.position.row, vector.position.col].sum(&:abs)
       end
     end
   end

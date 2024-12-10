@@ -44,7 +44,7 @@ UUUUD"
       end
 
       def result
-        Main.solve_problem(lines) # 1985, 78985
+        Main.solve_problem(lines)
       end
     end
   end

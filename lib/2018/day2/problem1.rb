@@ -19,7 +19,7 @@ ababab
       def result
         pairs = lines.count { |line| line.chars.tally.value?(2) }
         triples = lines.count { |line| line.chars.tally.value?(3) }
-        pairs * triples # 8610
+        pairs * triples
       end
     end
   end

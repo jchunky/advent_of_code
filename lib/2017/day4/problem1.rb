@@ -20,7 +20,7 @@ golnm ltizhd dvwv xrizqhd omegnez nan yqajse lgef
       end
 
       def result
-        lines.count { |l| valid?(l) } # 451
+        lines.count { |l| valid?(l) }
       end
 
       def valid?(pass_phrase)

@@ -21,7 +21,6 @@ module Year2019
           end &&
             (digits == digits.sort)
         end
-        # 876
       end
     end
   end

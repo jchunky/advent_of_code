@@ -41,7 +41,6 @@ MXMXAXMASX
             end
           end
         end
-        # 2718
       end
 
       def find_word?(rows, r, c, coords, word)

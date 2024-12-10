@@ -13,11 +13,6 @@ module Year2018
       end
 
       def result
-        # lines = "#1 @ 1,3: 4x4
-        # #2 @ 3,1: 4x4
-        # #3 @ 5,5: 2x2
-        # ".split("\n")
-
         grid = []
         claims = []
 

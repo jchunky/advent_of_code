@@ -20,7 +20,7 @@ module Year2021
       end
 
       def result
-        lines.map(&:to_i).each_cons(2).count { |a, b| a < b } # 1715
+        lines.map(&:to_i).each_cons(2).count { |a, b| a < b }
       end
     end
   end

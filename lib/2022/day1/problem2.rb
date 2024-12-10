@@ -24,7 +24,7 @@ module Year2022
       end
 
       def result
-        input.split("\n\n").map { |elf| elf.split("\n").sum(&:to_i) }.max(3).sum # 211189
+        input.split("\n\n").map { |elf| elf.split("\n").sum(&:to_i) }.max(3).sum
       end
     end
   end

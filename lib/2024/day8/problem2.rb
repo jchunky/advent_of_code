@@ -55,7 +55,7 @@ module Year2024
       def result
         rows = lines.map(&:chars)
         map = Map.new(rows)
-        map.antinode_count # 381, 1184
+        map.antinode_count
       end
     end
   end

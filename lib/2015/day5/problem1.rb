@@ -20,7 +20,7 @@ dvszwmarrgswjxmb
       def result
         strings = lines
 
-        strings.count { |s| nice?(s) } # 258
+        strings.count { |s| nice?(s) }
       end
 
       def nice?(string)

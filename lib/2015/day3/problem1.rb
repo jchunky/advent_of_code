@@ -26,7 +26,7 @@ module Year2015
           end
           visits[position.to_s] += 1
         end
-        visits.keys.count # 2081
+        visits.keys.count
       end
     end
   end

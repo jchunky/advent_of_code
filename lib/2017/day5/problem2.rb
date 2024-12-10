@@ -25,7 +25,7 @@ module Year2017
           instructions[position] += increment
           position += jump
           steps += 1
-          raise(ResultException, steps) unless (0...instructions.count).cover?(position) # 26948068
+          raise(ResultException, steps) unless (0...instructions.count).cover?(position)
         end
       end
     end

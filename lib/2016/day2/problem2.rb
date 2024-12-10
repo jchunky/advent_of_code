@@ -46,7 +46,7 @@ UUUUD"
       end
 
       def result
-        Main.solve_problem(lines) # 5DB3, 57DD8
+        Main.solve_problem(lines)
       end
     end
   end

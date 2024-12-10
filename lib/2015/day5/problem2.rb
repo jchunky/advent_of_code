@@ -19,7 +19,7 @@ ieodomkazucvgmuy
       def result
         strings = lines
 
-        strings.count { |s| improved_nice?(s) } # 53
+        strings.count { |s| improved_nice?(s) }
       end
 
       def improved_nice?(string)

@@ -46,7 +46,6 @@ module Year2024
           .reject { |u| correct?(rules, u) }
           .map { |u| find_correct_permutation(rules, u) }
           .sum { |u| middle(u) }
-        # 5331
       end
 
       def correct?(rules, update)

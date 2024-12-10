@@ -16,7 +16,7 @@ module Year2018
       def result
         lines = input
 
-        eval(lines.delete("\n")) # 587
+        eval(lines.delete("\n"))
       end
     end
   end

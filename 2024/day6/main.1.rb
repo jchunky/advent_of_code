@@ -40,16 +40,8 @@ class Guard < Walker
 end
 
 class MyGrid < Grid
-  def record_visit(position)
-    place_content_at("X", position)
-  end
-
-  def find_guard_position
+  def find_guard
     find_content("^")
-  end
-
-  def visited_position_count
-    rows.join.count("X")
   end
 
   def obstacle_at?(position)
@@ -65,7 +57,7 @@ class Map
 
   def initialize(rows)
     @grid = MyGrid.new(rows)
-    @guard = Guard.new(@grid, @grid.find_guard_position)
+    @guard = Guard.new(@grid, @grid.find_guard)
   end
 end
 

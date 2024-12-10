@@ -1,8 +1,12 @@
 module Year2015
   module Day3
     class Problem2 < Problem
+      def self.test_input
+        "^>v<"
+      end
+
       def self.test_result
-        2341
+        3
       end
 
       def result

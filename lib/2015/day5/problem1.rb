@@ -4,8 +4,17 @@ module Year2015
       DUPLICATES = ("a".."z").map { |l| l * 2 }
       BANNED = %w[ab cd pq xy]
 
+      def self.test_input
+        "ugknbfddgicrmopn
+aaa
+jchzalrnumimnmhp
+haegwjzuvuyypxyu
+dvszwmarrgswjxmb
+"
+      end
+
       def self.test_result
-        258
+        2
       end
 
       def result

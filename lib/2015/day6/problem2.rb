@@ -1,8 +1,22 @@
 module Year2015
   module Day6
     class Problem2 < Problem
+      def self.test_input
+        "toggle 461,550 through 564,900
+turn off 370,39 through 425,839
+turn off 464,858 through 833,915
+turn off 812,389 through 865,874
+turn on 599,989 through 806,993
+turn on 376,415 through 768,548
+turn on 606,361 through 892,600
+turn off 448,208 through 645,684
+toggle 50,472 through 452,788
+toggle 205,417 through 703,826
+"
+      end
+
       def self.test_result
-        14687245
+        811117
       end
 
       def result

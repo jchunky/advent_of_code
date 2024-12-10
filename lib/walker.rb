@@ -1,6 +1,6 @@
 class Walker < Struct.new(:grid, :position, :directions, :loop_found, :visits)
-  def initialize(grid, position, directions = %i[north east south west])
-    super(grid, position, directions, false, {})
+  def initialize(grid, position)
+    super(grid, position, %i[north east south west], false, {})
   end
 
   def facing_content?(content)

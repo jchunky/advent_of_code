@@ -33,6 +33,8 @@ class Guard < Walker
     visits[visit] = true
   end
 
+  private
+
   def facing_obstacle?
     facing_content?("#")
   end
@@ -41,10 +43,6 @@ end
 class MyGrid < Grid
   def find_guard
     find_content("^")
-  end
-
-  def obstacle_at?(position)
-    content_at?("#", position)
   end
 end
 

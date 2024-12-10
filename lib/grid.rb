@@ -5,6 +5,10 @@ class Grid < Struct.new(:rows)
     end
   end
 
+  def find_all(content)
+    each_position.select { |position| content_of(position) == content }
+  end
+
   def content_at?(content, position)
     content_of(position) == content
   end

@@ -33,7 +33,6 @@ class Guard < Walker
     visits[visit] = true
   end
 
-
   def facing_obstacle?
     facing_content?("#")
   end

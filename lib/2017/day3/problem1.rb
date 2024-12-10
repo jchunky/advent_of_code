@@ -1,13 +1,16 @@
 module Year2017
   module Day3
     class Problem1 < Problem
+      def self.test_input
+        "1024"
+      end
+
       def self.test_result
-        430
+        31
       end
 
       def result
-        square_index = 312051
-        # square_index = 1024
+        square_index = input.to_i
 
         vector = Vector.new
         grid = SparseGrid.new

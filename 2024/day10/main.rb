@@ -19,19 +19,18 @@ class Trailhead < Struct.new(:map, :starting_position)
   private
 
   def trail_count
-    paths(starting_position, 0)
+    destinations = paths(starting_position, 0)
+    destinations.uniq.count
   end
 
   def paths(position, elevation)
-    return 1 if elevation == 9
+    return position if elevation == 9
 
-    position.orthogonally_adjacent_positions.sum do |adjacent_position|
+    position.orthogonally_adjacent_positions.map { |adjacent_position|
       if map.content_at?(elevation + 1, adjacent_position)
         paths(adjacent_position, elevation + 1)
-      else
-        0
       end
-    end
+    }.flatten.compact
   end
 end
 

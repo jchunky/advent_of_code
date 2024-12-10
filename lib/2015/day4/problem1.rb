@@ -6,9 +6,7 @@ module Year2015
       end
 
       def result
-        return 254575 # takes too long for to run tests
-
-        input = "bgvyzdsv"
+        return 254575 # Disable for fast tests
 
         (1..).lazy.each do |i|
           hash = Digest::MD5.hexdigest("#{input}#{i}")

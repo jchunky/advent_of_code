@@ -16,7 +16,7 @@ module Year2024
             (i.even? ? [i / 2] : ["."]) * char.to_i
           end
         tally = array.tally
-        (array.uniq - ["."]).reverse_each.with_index do |file_id, i|
+        (array.uniq - ["."]).reverse_each do |file_id|
           file_position = array.index(file_id)
           file_length = tally[file_id]
           freespace_position = array.length.times.find do |j|

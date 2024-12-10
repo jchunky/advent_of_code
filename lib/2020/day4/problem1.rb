@@ -1,6 +1,8 @@
 module Year2020
   module Day4
     class Passport
+      EYE_COLORS = %w[amb blu brn gry grn hzl oth]
+
       attr_reader :byr, :iyr, :eyr, :hgt, :hcl, :ecl, :pid
 
       def initialize(data)
@@ -22,7 +24,7 @@ module Year2020
             (hgt =~ /^[\d]{2}in$/ && Integer(hgt.scan(/\d+/).join).in?(59..76))
           ) &&
           hcl =~ /^\#[\da-f]{6}$/ &&
-          %w[amb blu brn gry grn hzl oth].include?(ecl) &&
+          EYE_COLORS.include?(ecl) &&
           pid =~ /^[\d]{9}$/
       rescue StandardError
         false
@@ -30,6 +32,8 @@ module Year2020
     end
 
     class Problem1 < Problem
+      REQUIRED_PASSPORT_FIELDS = %w[byr iyr eyr hgt hcl ecl pid].sort
+
       def self.test_result
         222
       end
@@ -38,7 +42,7 @@ module Year2020
         passports = input.split("\n\n").map { |passport| passport.tr("\n", " ") }
 
         passports.count do |passport|
-          (passport.scan(/(\w{3}):/).flatten - ["cid"]).sort == %w[byr iyr eyr hgt hcl ecl pid].sort
+          (passport.scan(/(\w{3}):/).flatten - ["cid"]).sort == REQUIRED_PASSPORT_FIELDS
         end
       end
     end

@@ -15,9 +15,7 @@ module Year2015
             position -= 1
           end
 
-          if position == -1
-            raise(ResultException, i)
-          end
+          raise(ResultException, i) if position == -1
         end
       end
     end

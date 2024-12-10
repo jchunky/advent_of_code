@@ -1,6 +1,6 @@
 module Year2024
   module Day10
-    class Trailhead < Struct.new(:map, :starting_position)
+    class Trailhead < Struct.new(:the_map, :starting_position)
       def score
         destination_count
       end
@@ -25,9 +25,7 @@ module Year2024
         return position if elevation == 9
 
         position.orthogonally_adjacent_positions.map { |adjacent_position|
-          if map.content_at?(elevation + 1, adjacent_position)
-            find_destinations(adjacent_position, elevation + 1)
-          end
+          find_destinations(adjacent_position, elevation + 1) if the_map.content_at?(elevation + 1, adjacent_position)
         }.flatten.compact
       end
     end

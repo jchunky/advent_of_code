@@ -67,7 +67,7 @@ module Year2024
         Array.new(update.length) do
           next_number = update.find { |n| rules.map(&:last).exclude?(n) }
           update.delete(next_number)
-          rules = rules.reject { |a, b| a == next_number }
+          rules = rules.reject { |a, _b| a == next_number }
           next_number
         end
       end

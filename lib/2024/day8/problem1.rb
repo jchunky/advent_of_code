@@ -33,7 +33,7 @@ module Year2024
         end
 
         def antinode_count
-          antennas.antenna_positions_by_frequency.each do |_frequency, positions|
+          antennas.antenna_positions_by_frequency.each_value do |positions|
             record_antinodes(positions)
           end
           antinodes.antinode_count

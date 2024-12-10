@@ -42,14 +42,14 @@ zoneight234
           _index, left_digit =
             DIGITS
               .transform_keys { |word| line.index(word) }
-              .select { |index, value| index }
-              .min_by { |index, value| index }
+              .select { |index, _value| index }
+              .min_by { |index, _value| index }
 
           _index, right_digit =
             DIGITS
               .transform_keys { |word| line.rindex(word) }
-              .select { |index, value| index }
-              .max_by { |index, value| index }
+              .select { |index, _value| index }
+              .max_by { |index, _value| index }
 
           [left_digit, right_digit].join.to_i
         end

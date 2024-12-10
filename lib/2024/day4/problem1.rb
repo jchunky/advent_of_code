@@ -32,11 +32,11 @@ MXMXAXMASX
         ]
         word = "XMAS"
         words = [word, word.reverse]
-        words.sum do |word|
+        words.sum do |w|
           directions.sum do |coords|
             row_count.times.sum do |r|
               col_count.times.count do |c|
-                find_word?(rows, r, c, coords, word)
+                find_word?(rows, r, c, coords, w)
               end
             end
           end

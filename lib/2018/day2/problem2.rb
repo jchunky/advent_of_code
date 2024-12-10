@@ -16,15 +16,13 @@ wvxyz"
       end
 
       def result
-        c, d = lines.combination(2).select { |a, b|
-          a.chars.zip(b.chars).count { |a, b|
-            a != b
-          } == 1
+        e, f = lines.combination(2).select { |a, b|
+          a.chars.zip(b.chars).count { |c, d| c != d } == 1
         }.flatten
 
-        c.length.times
-          .select { |i| c[i] == d[i] }
-          .map { |i| c[i] }
+        e.length.times
+          .select { |i| e[i] == f[i] }
+          .map { |i| e[i] }
           .join
       end
     end

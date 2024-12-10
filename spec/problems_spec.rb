@@ -21,8 +21,7 @@ def class_of(problem_path)
 end
 
 def input_file_of(problem_path)
-  year, day, problem = problem_path.split(/\W/)[4, 3]
-  input_file = "#{problem_path[0, problem_path.rindex("/")]}/input.txt"
+  "#{problem_path[0, problem_path.rindex("/")]}/input.txt"
 end
 
 describe "problems" do

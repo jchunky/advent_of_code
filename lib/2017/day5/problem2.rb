@@ -15,13 +15,6 @@ module Year2017
       end
 
       def result
-        # lines = "0
-        # 3
-        # 0
-        # 1
-        # -3
-        # ".split("\n")
-
         instructions = lines.map(&:to_i)
         position = 0
         steps = 0

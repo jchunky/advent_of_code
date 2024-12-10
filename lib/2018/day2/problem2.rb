@@ -6,11 +6,11 @@ module Year2018
       end
 
       def result
-        c, d = lines.combination(2).select do |a, b|
+        c, d = lines.combination(2).select { |a, b|
           a.chars.zip(b.chars).count { |a, b|
             a != b
           } == 1
-        end.flatten
+        }.flatten
 
         c.length.times
           .select { |i| c[i] == d[i] }

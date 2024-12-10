@@ -32,7 +32,7 @@ module Year2018
         end
 
         claims = claims.uniq
-        grid.flatten.uniq.find { |e| e != "X" && !e.nil? && !claims.include?(e) }
+        grid.flatten.uniq.find { |e| e != "X" && !e.nil? && claims.exclude?(e) }
       end
     end
   end

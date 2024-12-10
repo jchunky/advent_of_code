@@ -4,6 +4,7 @@ module Year2016
       def self.test_input
         "R5, L5, R5, R3"
       end
+
       def self.test_result
         12
       end

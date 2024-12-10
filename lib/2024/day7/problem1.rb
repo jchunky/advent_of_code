@@ -27,7 +27,6 @@ module Year2024
         equations
           .select { |e| match?(operators, e) }
           .sum { |e| total_of(e) }
-        # 1430271835320
       end
 
       def match?(operators, equation)

@@ -1,6 +1,10 @@
 module Year2024
   module Day7
     class Problem2 < Problem
+      def self.test_result
+        456565678667482
+      end
+
       def result
         equations = lines
 

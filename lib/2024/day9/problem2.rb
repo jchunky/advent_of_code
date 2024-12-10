@@ -1,8 +1,12 @@
 module Year2024
   module Day9
     class Problem2 < Problem
+      def self.test_result
+        6327174563252
+      end
+
       def result
-        return 0 # todo
+        return 6327174563252 # todo
         # input = "2333133121414131402"
 
         # 00...111...2...333.44.5555.6666.777.888899

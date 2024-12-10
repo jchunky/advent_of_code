@@ -1,6 +1,10 @@
 module Year2019
   module Day1
     class Problem2 < Problem
+      def self.test_result
+        5097039
+      end
+
       def result
         lines.map(&:to_i).sum { |mass| required_fuel_for(mass) }
       end

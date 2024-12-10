@@ -21,6 +21,10 @@ module Year2023
         "8" => 8,
         "9" => 9,
       }
+      def self.test_result
+        53866
+      end
+
       def result
         lines.sum do |line|
           _index, left_digit =

@@ -1,6 +1,10 @@
 module Year2017
   module Day4
     class Problem2 < Problem
+      def self.test_result
+        223
+      end
+
       def result
         lines.count { |l| improved_valid?(l) } # 451
       end

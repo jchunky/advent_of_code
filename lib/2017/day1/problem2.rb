@@ -1,6 +1,10 @@
 module Year2017
   module Day1
     class Problem2 < Problem
+      def self.test_result
+        1156
+      end
+
       def result
         input.length.times
           .select { |i| input[i] == input[(i + (input.length / 2)) % input.length] }

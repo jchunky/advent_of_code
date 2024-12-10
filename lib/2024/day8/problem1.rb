@@ -50,6 +50,10 @@ module Year2024
         end
       end
 
+      def self.test_result
+        381
+      end
+
       def result
         # input = "............
         # ........0...

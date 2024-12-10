@@ -1,6 +1,10 @@
 module Year2016
   module Day3
     class Problem1 < Problem
+      def self.test_result
+        1050
+      end
+
       def result
         # lines = "101 301 501
         # 102 302 502

@@ -1,6 +1,10 @@
 module Year2023
   module Day1
     class Problem1 < Problem
+      def self.test_result
+        54159
+      end
+
       def result
         lines.sum do |line|
           find_two_digits = line.scan(/^[a-z]*(\d).*(\d)[a-z]*$/).join

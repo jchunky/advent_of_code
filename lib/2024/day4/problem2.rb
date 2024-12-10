@@ -1,6 +1,10 @@
 module Year2024
   module Day4
     class Problem2 < Problem
+      def self.test_result
+        2046
+      end
+
       def result
         rows = lines.map(&:chars)
         row_count = rows.count

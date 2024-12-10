@@ -53,6 +53,10 @@ module Year2024
     end
 
     class Problem1 < Problem
+      def self.test_result
+        514
+      end
+
       def result
         # input = "89010123
         # 78121874

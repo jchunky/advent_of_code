@@ -1,6 +1,10 @@
 module Year2018
   module Day3
     class Problem1 < Problem
+      def self.test_result
+        103482
+      end
+
       def result
         # lines = "#1 @ 1,3: 4x4
         # #2 @ 3,1: 4x4

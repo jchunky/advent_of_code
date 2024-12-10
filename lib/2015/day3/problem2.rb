@@ -1,6 +1,10 @@
 module Year2015
   module Day3
     class Problem2 < Problem
+      def self.test_result
+        2341
+      end
+
       def result
         santa_position = [0, 0]
         robo_position = [0, 0]

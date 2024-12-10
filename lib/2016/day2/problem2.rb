@@ -39,6 +39,10 @@ module Year2016
         end
       end
 
+      def self.test_result
+        "57DD8"
+      end
+
       def result
         Main.solve_problem(lines) # 5DB3, 57DD8
       end

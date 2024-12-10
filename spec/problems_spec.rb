@@ -6,15 +6,30 @@ Dir["../lib/utils/*.rb"].each { |file| require_relative(file) }
 Dir["../lib/**/*.rb"].each { |file| require_relative(file) }
 
 describe "problems" do
-  it "are solved"  do
+  it "are solved" do
     problems = Dir["../lib/**/problem?.rb"]
     problems.each do |problem|
-      p problem
       clazz = class_of(problem)
-      input_file = input_file_of(problem)
-      input = File.read(input_file)
-      p get_result { clazz.new(input).result }
+      input =
+        if clazz.respond_to?(:test_input)
+          clazz.test_input
+        else
+          input_file = input_file_of(problem)
+          File.read(input_file)
+        end
+      result = get_result { clazz.new(input).result }
+      expect(result).to eq(clazz.test_result)
     end
+  end
+
+  it "current problem is solved" do
+    problem = Dir["../lib/2024/day10/problem1.rb"].first
+
+    p problem
+    clazz = class_of(problem)
+    input_file = input_file_of(problem)
+    input = File.read(input_file)
+    p(get_result { clazz.new(input).result })
   end
 
   def get_result
@@ -24,13 +39,12 @@ describe "problems" do
   end
 
   def class_of(problem_path)
-    year, day, problem =  problem_path.split(/\W/)[4, 3]
-    clazz = "Year#{year}::#{day.capitalize}::#{problem.capitalize}".constantize
-    clazz
+    year, day, problem = problem_path.split(/\W/)[4, 3]
+    "Year#{year}::#{day.capitalize}::#{problem.capitalize}".constantize
   end
 
   def input_file_of(problem_path)
-    year, day, problem =  problem_path.split(/\W/)[4, 3]
-    input_file = problem_path[0, problem_path.rindex("/")] + "/input.txt"
+    year, day, problem = problem_path.split(/\W/)[4, 3]
+    input_file = "#{problem_path[0, problem_path.rindex("/")]}/input.txt"
   end
 end

@@ -1,6 +1,10 @@
 module Year2024
   module Day3
     class Problem2 < Problem
+      def self.test_result
+        90044227
+      end
+
       def result
         elements = input
           .scan(/(mul\(\d+,\d+\)|do\(\)|don't\(\))/)

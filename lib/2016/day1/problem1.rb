@@ -1,6 +1,10 @@
 module Year2016
   module Day1
     class Problem1 < Problem
+      def self.test_result
+        161
+      end
+
       def result
         instructions = input
 

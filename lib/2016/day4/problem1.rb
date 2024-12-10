@@ -33,6 +33,10 @@ module Year2016
     end
 
     class Problem1 < Problem
+      def self.test_result
+        245102
+      end
+
       def result
         lines
           .map { |line| Room.new(line) }

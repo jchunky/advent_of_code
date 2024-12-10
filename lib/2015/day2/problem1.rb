@@ -1,6 +1,10 @@
 module Year2015
   module Day2
     class Problem1 < Problem
+      def self.test_result
+        1598415
+      end
+
       def result
         lines.sum { |l| required_wrapping_paper(l) }
       end

@@ -1,6 +1,10 @@
 module Year2017
   module Day2
     class Problem1 < Problem
+      def self.test_result
+        51139
+      end
+
       def result
         rows = lines
 

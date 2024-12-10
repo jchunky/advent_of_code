@@ -1,6 +1,10 @@
 module Year2015
   module Day6
     class Problem1 < Problem
+      def self.test_result
+        543903
+      end
+
       def result
         instructions = lines
         grid = Array.new(1000) { [false] * 1000 }

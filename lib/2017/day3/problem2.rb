@@ -1,6 +1,10 @@
 module Year2017
   module Day3
     class Problem2 < Problem
+      def self.test_result
+        312453
+      end
+
       def result
         square_index = 312051
         # square_index = 1024

@@ -1,6 +1,10 @@
 module Year2016
   module Day5
     class Problem1 < Problem
+      def self.test_result
+        "f97c354d"
+      end
+
       def result
         input = "reyedfim"
         index = 0
@@ -10,7 +14,7 @@ module Year2016
           password += hash[5] if hash.start_with?("00000")
           index += 1
         end
-        password # f97c354d
+        password
       end
     end
   end

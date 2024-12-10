@@ -1,6 +1,10 @@
 module Year2017
   module Day5
     class Problem2 < Problem
+      def self.test_result
+        26948068
+      end
+
       def result
         # lines = "0
         # 3

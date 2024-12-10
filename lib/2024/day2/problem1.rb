@@ -1,6 +1,10 @@
 module Year2024
   module Day2
     class Problem1 < Problem
+      def self.test_result
+        213
+      end
+
       def result
         reports = lines.map(&:split).map { |e| e.map(&:to_i) }
 

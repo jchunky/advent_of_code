@@ -1,6 +1,10 @@
 module Year2015
   module Day2
     class Problem2 < Problem
+      def self.test_result
+        3812909
+      end
+
       def result
         lines.sum { |l| required_ribbon(l) }
       end

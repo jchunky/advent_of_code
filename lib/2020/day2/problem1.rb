@@ -1,6 +1,10 @@
 module Year2020
   module Day2
     class Problem1 < Problem
+      def self.test_result
+        383
+      end
+
       def result
         # lines = "1-3 a: abcde
         # 1-3 b: cdefg

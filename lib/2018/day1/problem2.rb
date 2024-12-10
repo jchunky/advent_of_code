@@ -1,6 +1,10 @@
 module Year2018
   module Day1
     class Problem2 < Problem
+      def self.test_result
+        83130
+      end
+
       def result
         frequency = 0
         seen = {}

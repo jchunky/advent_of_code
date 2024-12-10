@@ -1,6 +1,10 @@
 module Year2016
   module Day1
     class Problem2 < Problem
+      def self.test_result
+        110
+      end
+
       def result
         instructions = input
         bearing = %i[north east south west]

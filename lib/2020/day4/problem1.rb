@@ -30,6 +30,10 @@ module Year2020
     end
 
     class Problem1 < Problem
+      def self.test_result
+        222
+      end
+
       def result
         passports = input.split("\n\n").map { |passport| passport.tr("\n", " ") }
 

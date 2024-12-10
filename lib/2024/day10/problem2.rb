@@ -1,6 +1,10 @@
 module Year2024
   module Day10
     class Problem2 < Problem
+      def self.test_result
+        1162
+      end
+
       def result
         # input = "89010123
         # 78121874

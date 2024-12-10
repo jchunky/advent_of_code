@@ -1,6 +1,10 @@
 module Year2024
   module Day5
     class Problem1 < Problem
+      def self.test_result
+        5588
+      end
+
       def result
         rules, updates = input.split("\n\n")
         rules = rules.split("\n").map { |r| r.split("|").map(&:to_i) }

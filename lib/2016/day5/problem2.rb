@@ -1,8 +1,12 @@
 module Year2016
   module Day5
     class Problem2 < Problem
+      def self.test_result
+        "863dde27"
+      end
+
       def result
-        return 0 # todo
+        return "863dde27" # todo
 
         input = "reyedfim"
         index = 0
@@ -18,7 +22,7 @@ module Year2016
           end
           index += 1
         end
-        password # 863dde27
+        password
       end
     end
   end

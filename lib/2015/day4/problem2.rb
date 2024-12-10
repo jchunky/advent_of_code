@@ -1,8 +1,12 @@
 module Year2015
   module Day4
     class Problem2 < Problem
+      def self.test_result
+        1038736
+      end
+
       def result
-        input = "bgvyzdsv" # 254575
+        input = "bgvyzdsv"
 
         (1..).lazy.each do |i|
           hash = Digest::MD5.hexdigest("#{input}#{i}")

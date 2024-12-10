@@ -1,6 +1,10 @@
 module Year2015
   module Day3
     class Problem1 < Problem
+      def self.test_result
+        2081
+      end
+
       def result
         position = [0, 0]
         visits = Hash.new(0)

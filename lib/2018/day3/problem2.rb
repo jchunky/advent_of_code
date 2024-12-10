@@ -1,6 +1,10 @@
 module Year2018
   module Day3
     class Problem2 < Problem
+      def self.test_result
+        686
+      end
+
       def result
         # lines = "#1 @ 1,3: 4x4
         # #2 @ 3,1: 4x4
@@ -28,7 +32,7 @@ module Year2018
         end
 
         claims = claims.uniq
-        grid.flatten.uniq.reject { |e| e == "X" || e.nil? || claims.include?(e) } # 686
+        grid.flatten.uniq.find { |e| e != "X" && !e.nil? && !claims.include?(e) }
       end
     end
   end

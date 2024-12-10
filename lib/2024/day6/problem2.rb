@@ -64,14 +64,8 @@ module Year2024
         end
       end
 
-      def self.test_result
-        1909
-      end
-
-      def result
-        return 1909 # todo
-
-        input = "....#.....
+      def self.test_input
+        "....#.....
 .........#
 ..........
 ..#.......
@@ -81,8 +75,14 @@ module Year2024
 ........#.
 #.........
 ......#...
-".split("\n")
+"
+      end
 
+      def self.test_result
+        6
+      end
+
+      def result
         rows = lines.map(&:chars)
         map = Map.new(rows)
         map.variations_with_loop_count

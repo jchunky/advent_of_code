@@ -40,14 +40,4 @@ describe "problems" do
       expect(result).to eq(clazz.test_result)
     end
   end
-
-  it "current problem is solved" do
-    problem = Dir["../lib/2024/day10/problem1.rb"].first
-
-    p problem
-    clazz = class_of(problem)
-    input_file = input_file_of(problem)
-    input = File.read(input_file)
-    p(get_result { clazz.new(input).result })
-  end
 end

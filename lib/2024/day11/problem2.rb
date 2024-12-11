@@ -13,18 +13,23 @@ module Year2024
         blink_count = 6
         # blink_count = 75
         stones = input.split.map(&:to_i)
-        blink_count.times do
-          stones = stones.flat_map do |stone|
+        blink_count.times.each do
+          print "."
+          offset = 0
+          (0...stones.count).each do |i|
+            stone = stones[i + offset]
             case
             when stone == 0
-              1
+              stones[i + offset] = 1
             when stone.digits.count.even?
               a, b = stone.to_s.chars
                 .each_slice(stone.digits.count / 2)
                 .map { |digits| digits.join.to_i }
-              [a, b]
+              stones[i + offset] = a
+              stones.insert(i + offset + 1, b)
+              offset += 1
             else
-              stone * 2024
+              stones[i + offset] = stone * 2024
             end
           end
         end

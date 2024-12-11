@@ -1,6 +1,8 @@
 module Year2024
   module Day11
     class Problem2 < Problem
+      attr_reader :results
+
       def self.test_input
         "125 17"
       end
@@ -9,31 +11,43 @@ module Year2024
         22
       end
 
+      def initialize(input)
+        super
+        @results = {}
+      end
+
       def result
         blink_count = 6
         # blink_count = 75
+
         stones = input.split.map(&:to_i)
-        blink_count.times.each do
-          print "."
-          offset = 0
-          (0...stones.count).each do |i|
-            stone = stones[i + offset]
-            case
-            when stone == 0
-              stones[i + offset] = 1
-            when stone.digits.count.even?
-              a, b = stone.to_s.chars
-                .each_slice(stone.digits.count / 2)
-                .map { |digits| digits.join.to_i }
-              stones[i + offset] = a
-              stones.insert(i + offset + 1, b)
-              offset += 1
-            else
-              stones[i + offset] = stone * 2024
-            end
-          end
+        stones.sum do |stone|
+          stone_count(stone, blink_count)
         end
-        stones.count
+      end
+
+      def stone_count(stone, blink_count)
+        return 1 if blink_count == 0
+
+        cached_result = results[[stone, blink_count]]
+        return cached_result if cached_result
+
+        result =
+          case
+          when stone == 0
+            stone_count(1, blink_count - 1)
+          when stone.digits.count.even?
+            a, b = stone.to_s.chars
+              .each_slice(stone.digits.count / 2)
+              .map { |digits| digits.join.to_i }
+            stone_count(a, blink_count - 1) + stone_count(b, blink_count - 1)
+          else
+            stone_count(stone * 2024, blink_count - 1)
+          end
+
+        results[[stone, blink_count]] = result
+
+        result
       end
     end
   end

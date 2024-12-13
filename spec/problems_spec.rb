@@ -6,7 +6,7 @@ Dir["../lib/utils/*.rb"].each { |file| require_relative(file) }
 Dir["../lib/**/*.rb"].each { |file| require_relative(file) }
 
 RSpec.configure do |config|
-  config.profile_examples = true
+  # config.profile_examples = true
 end
 
 def get_result

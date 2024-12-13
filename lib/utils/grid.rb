@@ -1,4 +1,25 @@
 class Grid < Struct.new(:rows)
+  def find_regions
+    processed = dup
+    regions = {}
+
+    (0...rows.size).each do |r|
+      (0...rows.first.size).each do |c|
+        position = Position.new(r, c)
+        next if processed.content_at?(".", position)
+
+        region = find_region(position)
+        regions[content_of(position)] = region
+        region.positions.each { |p| processed.place_content_at(".", p) }
+      end
+    end
+
+    regions
+  end
+
+  def find_region(position)
+  end
+
   def find_content(content)
     each_position.find { |position| content_of(position) == content }
   end

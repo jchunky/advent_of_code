@@ -18,6 +18,10 @@ module Year2024
           x < other.x && y < other.y
         end
 
+        def <=(other)
+          (x < other.x && y < other.y) || x < y
+        end
+
         def /(other)
           raise "#{self} not divisble by #{other}" unless divisible_by?(other)
 
@@ -39,23 +43,30 @@ module Year2024
         end
 
         def solution
-          (0..100)
-            .map { |button_a_press_count| [button_a_press_count, find_button_b_press_count(button_a_press_count)] }
-            .select { |_a, b| b }
-            .map { |a, b| (a * 3) + b }
-            .min
+          @solution ||= begin
+            button_a_press_count = nil
+            button_b_press_count = nil
+            (0..100).find do |b|
+              button_b_press_count = b
+              button_a_press_count = find_button_a_press_count(button_b_press_count)
+              break if button_a_press_count
+            end
+            if button_a_press_count
+              (button_a_press_count * 3) + button_b_press_count
+            end
+          end
         end
 
-        def find_button_b_press_count(button_a_press_count)
-          button_a_total = button_a * button_a_press_count
-          return 0 if button_a_total == prize
+        def find_button_a_press_count(button_b_press_count)
+          button_b_total = button_b * button_b_press_count
+          return 0 if button_b_total == prize
 
-          delta = prize - button_a_total
-          return false if delta.negative?
-          return false unless button_b < delta
-          return false unless delta.divisible_by?(button_b)
+          delta = prize - button_b_total
+          return if delta.negative?
+          return unless button_a <= delta
+          return unless delta.divisible_by?(button_a)
 
-          delta / button_b
+          delta / button_a
         end
       end
 

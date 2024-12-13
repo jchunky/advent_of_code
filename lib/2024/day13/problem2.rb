@@ -39,16 +39,18 @@ module Year2024
         end
 
         def solution
-          result = nil
-          (0..prize.x / button_a.x).each do |button_a_press_count|
-            p button_a_press_count
-            button_b_press_count = find_button_b_press_count(button_a_press_count)
-            next unless button_b_press_count
+          @solution ||= begin
+            result = nil
+            (0..prize.x / button_a.x).each do |button_a_press_count|
+              p button_a_press_count
+              button_b_press_count = find_button_b_press_count(button_a_press_count)
+              next unless button_b_press_count
 
-            tokens = (button_a_press_count * 3) + button_b_press_count
-            result = tokens if !result || tokens < result
+              tokens = (button_a_press_count * 3) + button_b_press_count
+              result = tokens if !result || tokens < result
+            end
+            result
           end
-          result
         end
 
         def find_button_b_press_count(button_a_press_count)

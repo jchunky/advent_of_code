@@ -1,5 +1,6 @@
 require "active_support/all"
 require "digest"
+require "prime"
 
 Dir.chdir("spec")
 Dir["../lib/utils/*.rb"].each { |file| require_relative(file) }

@@ -6,63 +6,35 @@ module Year2024
           Delta.new(x + other.x, y + other.y)
         end
 
-        def -(other)
-          Delta.new(x - other.x, y - other.y)
-        end
-
         def *(n)
           Delta.new(x * n, y * n)
-        end
-
-        def <(other)
-          x < other.x && y < other.y
-        end
-
-        def /(other)
-          raise "#{self} not divisble by #{other}" unless divisible_by?(other)
-
-          x / other.x
-        end
-
-        def negative?
-          x.negative? || y.negative?
-        end
-
-        def divisible_by?(other)
-          x % other.x == 0 && y % other.y == 0 && x / other.x == y / other.y
         end
       end
 
       class Machine < Struct.new(:button_a, :button_b, :prize)
-        def solvable?
-          solution
-        end
-
         def solution
-          @solution ||= begin
-            result = nil
-            (0..prize.x / button_a.x).each do |button_a_press_count|
-              p button_a_press_count
-              button_b_press_count = find_button_b_press_count(button_a_press_count)
-              next unless button_b_press_count
-
-              tokens = (button_a_press_count * 3) + button_b_press_count
-              result = tokens if !result || tokens < result
-            end
-            result
+          m, n = solve_m_and_n(button_a, button_b, prize)
+          if (button_a * m) + (button_b * n) == prize
+            (m * 3) + n
+          else
+            0
           end
         end
 
-        def find_button_b_press_count(button_a_press_count)
-          button_a_total = button_a * button_a_press_count
-          return 0 if button_a_total == prize
+        # m * ax + n * bx = sx
+        # m * ay + n * by = sy
+        def solve_m_and_n(vector_a, vector_b, vector_sum)
+          ax = vector_a.x
+          ay = vector_a.y
+          bx = vector_b.x
+          by = vector_b.y
+          sx = vector_sum.x
+          sy = vector_sum.y
 
-          delta = prize - button_a_total
-          return false if delta.negative?
-          return false unless button_b < delta
-          return false unless delta.divisible_by?(button_b)
+          n = ((sy * ax) - (sx * ay)) / ((by * ax) - (bx * ay))
+          m = (sx - (n * bx)) / ax
 
-          delta / button_b
+          [m, n]
         end
       end
 
@@ -86,16 +58,13 @@ Prize: X=18641, Y=10279
       end
 
       def self.test_result
-        480
+        875318608908
       end
 
       def result
-        return 480
-
         input
           .split("\n\n")
           .map { |lines| build_machine(lines) }
-          .select(&:solvable?)
           .sum(&:solution)
       end
 

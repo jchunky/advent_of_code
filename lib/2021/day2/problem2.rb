@@ -1,7 +1,7 @@
 module Year2021
   module Day2
     class Problem2 < Problem
-      def self.test_inputx
+      def self.test_input
         "forward 5
 down 5
 forward 8
@@ -12,24 +12,26 @@ forward 2
       end
 
       def self.test_result
-        150
+        900
       end
 
       def result
         v = 0
         h = 0
+        aim = 0
 
         lines.each do |line|
-          direction, magnitude = line.split
-          magnitude = magnitude.to_i
+          direction, x = line.split
+          x = x.to_i
 
           case direction
           when 'forward'
-            h += magnitude
+            h += x
+            v += aim * x
           when 'down'
-            v += magnitude
+            aim += x
           when 'up'
-            v -= magnitude
+            aim -= x
           end
         end
 

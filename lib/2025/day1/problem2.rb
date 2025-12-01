@@ -1,19 +1,19 @@
 module Year2025
   module Day1
     class Problem2 < Problem
-#       def self.test_input
-#         "L68
-# L30
-# R48
-# L5
-# R60
-# L55
-# L1
-# L99
-# R14
-# L82
-# "
-#       end
+      def self.test_input
+        "L68
+L30
+R48
+L5
+R60
+L55
+L1
+L99
+R14
+L82
+"
+      end
 
       def self.test_result
         6

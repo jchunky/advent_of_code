@@ -21,12 +21,12 @@ enarar"
       end
 
       def self.test_result
-        "easter"
+        "advent"
       end
 
       def result
         lines.map(&:chars).transpose.map do |column|
-          column.max_by { |c| column.count(c) }
+          column.min_by { |c| column.count(c) }
         end.join
       end
     end

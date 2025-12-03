@@ -12,17 +12,15 @@ CrZsJsPPZsGzwwsLwLmpwMDw
       end
 
       def self.test_result
-        157
+        70
       end
 
       VALUES = (('a'..'z').to_a + ('A'..'Z').to_a).zip((1..52).to_a).to_h
 
       def result
-        lines.sum do |line|
-          line = line.chars
-          half = line.length / 2
-          a, b = line.first(half), line.last(half)
-          letter = a.intersection(b).first
+        lines.each_slice(3).sum do |group|
+          a, b, c = group.map(&:chars)
+          letter = (a & b & c).first
           VALUES[letter]
         end
       end

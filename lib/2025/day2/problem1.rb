@@ -17,21 +17,21 @@ module Year2025
           lower = lower.to_i
           upper = upper.to_i
           (lower..upper).each do |n|
-            sum += n unless valid?(n)
+            sum += n if invalid?(n)
           end
         end
         sum
       end
 
-      def valid?(n)
+      def invalid?(n)
         s = n.to_s
-        return true if s.length.odd?
+        return false if s.length.odd?
 
         half_length = s.length / 2
         first_half = s[0, half_length]
         second_half = s[(half_length)..]
 
-        first_half != second_half
+        first_half == second_half
       end
     end
   end

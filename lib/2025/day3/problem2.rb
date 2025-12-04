@@ -16,11 +16,18 @@ module Year2025
       def result
         lines.sum do |line|
           digits = line.chars.map(&:to_i)
-          first_digit = digits[0..-2].max
-          first_index = digits.index(first_digit)
-          second_digit = digits[(first_index + 1)..].max
-
-          first_digit * 10 + second_digit
+          left_index = 0
+          right_index = line.length - 12
+          result = []
+          while result.length < 12
+            candidates = digits[left_index..right_index]
+            next_digit = candidates.max
+            next_digit_index = candidates.index(next_digit) + left_index
+            result << next_digit
+            left_index = next_digit_index + 1
+            right_index += 1
+          end
+          result.join.to_i
         end
       end
     end

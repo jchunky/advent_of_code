@@ -26,7 +26,7 @@ module Year2025
             height.times do |r|
               coord = [r, c]
 
-              count += 1 if rolls_can_be_accessed?(coord)
+              count += 1 if roll_can_be_accessed?(coord)
             end
           end
           count
@@ -34,7 +34,7 @@ module Year2025
 
         private
 
-        def rolls_can_be_accessed?(coord)
+        def roll_can_be_accessed?(coord)
           return false unless has_roll?(coord)
 
           adject_positions(coord).count { |coord| has_roll?(coord) } < 4

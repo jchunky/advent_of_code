@@ -17,15 +17,27 @@ module Year2025
       end
 
       def self.test_result
-        3
+        14
       end
 
       def result
         valid_ranges, available_items = input.split("\n\n")
         valid_ranges = valid_ranges.split("\n").map { |s| s.split("-").map(&:to_i) }.map { |l, u| (l..u) }
-        available_items = available_items.split("\n").map(&:to_i)
 
-        available_items.count { |i| valid_ranges.any? { |r| r.cover?(i) } }
+        loop do
+          a, b = (0...valid_ranges.count).to_a.combination(2).find { |a, b| valid_ranges[a].overlap?(valid_ranges[b]) }
+          break unless a
+
+          valid_ranges << merge(valid_ranges[a], valid_ranges[b])
+          valid_ranges.delete_at(b)
+          valid_ranges.delete_at(a)
+        end
+
+        valid_ranges.sum(&:count)
+      end
+
+      def merge(a, b)
+        ([a.min, b.min].min..[a.max, b.max].max)
       end
     end
   end

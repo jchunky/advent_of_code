@@ -12,14 +12,14 @@ module Year2022
       end
 
       def self.test_result
-        2
+        4
       end
 
       def result
         lines.map.count do |line|
           a, b = line.split(",")
           a, b = to_range(a), to_range(b)
-          a.cover?(b) || b.cover?(a)
+          a.overlap?(b)
         end
       end
 

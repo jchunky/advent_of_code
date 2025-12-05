@@ -17,16 +17,27 @@ module Year2020
       end
 
       def self.test_result
-        7
+        336
       end
 
       class Map < Struct.new(:grid)
         def solve
+          slopes = [
+            [1, 1],
+            [1, 3],
+            [1, 5],
+            [1, 7],
+            [2, 1],
+          ]
+          slopes.map { solve_for(it) }.reduce(&:*)
+        end
+
+        def solve_for(slope)
           tree_count = 0
           position = [0, 0]
           tree_count += 1 if tree?(position)
           while !bottom?(position)
-            position = apply_delta(position, [1, 3])
+            position = apply_delta(position, slope)
             tree_count += 1 if tree?(position)
           end
           tree_count

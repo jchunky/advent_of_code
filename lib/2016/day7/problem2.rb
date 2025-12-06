@@ -2,30 +2,40 @@ module Year2016
   module Day7
     class Problem2 < Problem
       def self.test_input
-        "abba[mnop]qrst
-abcd[bddb]xyyx
-aaaa[qwer]tyui
-ioxxoj[asdfgh]zxcvbn
+        "aba[bab]xyz
+xyx[xyx]xyx
+aaa[kek]eke
+zazbz[bzb]cdb
 "
       end
 
       def self.test_result
-        # 3
-        2
+        3
       end
 
       def result
-        lines.count(&method(:supports_tls?))
+        lines.count(&method(:supports_ssl?))
       end
 
-      def supports_tls?(ip_address)
+      def supports_ssl?(ip_address)
         sequences = ip_address.gsub(/\[\w+\]/, ' ').split
         hypernet_sequences = ip_address.scan(/\[(\w+)\]/).flatten
-        sequences.any?(&method(:has_abba?)) && hypernet_sequences.none?(&method(:has_abba?))
+        sequences.any? do |sequence|
+          abas(sequence).any? do |aba|
+            hypernet_sequences.any? { |hs| has_bab?(aba, hs) }
+          end
+        end
       end
 
-      def has_abba?(sequence)
-        sequence.chars.each_cons(4).any? { it == it.reverse && it.uniq.count > 1 }
+      def abas(sequence)
+        sequence.chars.each_cons(3)
+          .select { it == it.reverse && it.uniq.count > 1 }
+          .map(&:join)
+      end
+
+      def has_bab?(aba, sequence)
+        bab = [aba[1], aba[0], aba[1]].join
+        sequence.include?(bab)
       end
     end
   end

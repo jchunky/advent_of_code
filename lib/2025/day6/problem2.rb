@@ -10,14 +10,48 @@ module Year2025
       end
 
       def self.test_result
-        4277556
+        3263827
+      end
+
+      class Solver < Struct.new(:lines)
+        def solve
+          lines
+            .map { slice_on_indexes(it) }
+            .transpose
+            .map(&method(:calculate))
+            .sum
+        end
+
+        private
+
+        def calculate(column)
+          *rest, operation = column
+          operation = operation.strip.to_sym
+          max_length = rest.map(&:length).max
+
+          rest
+            .map { it.ljust(max_length) }
+            .map(&:chars)
+            .transpose
+            .map { it.join.delete(' ').to_i }
+            .reject(&:zero?)
+            .reduce(&operation)
+        end
+
+        def slice_on_indexes(line)
+          line.chars.each_with_index
+            .slice_before { |_, i| indexes.include?(i) }
+            .map { it.map(&:first) }
+            .map(&:join)
+        end
+
+        def indexes
+          @indexes ||= (1...lines.last.length).to_a.select { |i| lines.last[i] != ' ' }
+        end
       end
 
       def result
-        lines.map(&:split).transpose.sum do |column|
-          *rest, operation = column
-          rest.map(&:to_i).reduce(&operation.to_sym)
-        end
+        Solver.new(lines).solve
       end
     end
   end

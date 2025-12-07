@@ -12,18 +12,22 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11
       end
 
       def self.test_result
-        13
+        30
       end
 
       def result
-        lines.sum do|line|
-          line = line.split(":").last
+        cards = [1] * lines.count
+
+        lines.count.times do|i|
+          line = lines[i].split(":").last
           winners, have = line.split("|")
           winners = winners.split.map(&:to_i)
           have = have.split.map(&:to_i)
           win_count = (winners & have).count
-          win_count.zero? ? 0 : 2 ** (win_count - 1)
+          win_count.times { cards[it + i + 1] += cards[i] }
         end
+
+        cards.sum
       end
     end
   end

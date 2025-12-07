@@ -34,9 +34,8 @@ rotate column x=1 by 1
             i, rotation = line.scan(/\d+/).map(&:to_i)
             screen[i].rotate!(-rotation)
           end
-
-          # puts ["", ""] + screen.map(&:join)
         end
+        # puts ["", ""] + screen.map(&:join)
 
         screen.flatten.count('#')
       end

@@ -22,7 +22,7 @@ module Year2025
       end
 
       def self.test_result
-        21
+        40
       end
 
       class Solver < Struct.new(:grid)
@@ -33,17 +33,20 @@ module Year2025
         def solve
           height.times do |r|
             width.times do |c|
-              grid[r][c] = '|' if should_be_beam?(r, c)
+              grid[r][c] = 0 if at(r, c) == '.'
+              grid[r][c] = 1 if at(r, c) == 'S'
+            end
+          end
+
+          height.times do |r|
+            width.times do |c|
+              grid[r][c] += beam_increment(r, c) if at(r, c) != '^'
             end
           end
 
           # puts inspect
 
-          height.times.sum do |r|
-            width.times.count do |c|
-              at(r, c) == '^' && at(r - 1, c) == '|'
-            end
-          end
+          grid[-1].sum
         end
 
         def inspect
@@ -52,13 +55,12 @@ module Year2025
 
         private
 
-        def should_be_beam?(r, c)
-          return false if at(r, c) == '^'
-          return true if ['|', 'S'].include?(at(r - 1, c))
-          return true if at(r, c + 1) == '^' && at(r - 1, c + 1) == '|'
-          return true if at(r, c - 1) == '^' && at(r - 1, c - 1) == '|'
-
-          false
+        def beam_increment(r, c)
+          result = 0
+          result += at(r - 1, c).to_i
+          result += at(r - 1, c - 1).to_i if at(r, c - 1) == '^'
+          result += at(r - 1, c + 1).to_i if at(r, c + 1) == '^'
+          result
         end
 
         def at(r, c)

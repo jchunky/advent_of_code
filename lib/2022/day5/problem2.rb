@@ -15,7 +15,7 @@ move 1 from 1 to 2
       end
 
       def self.test_result
-        "CMZ"
+        "MCD"
       end
 
       class Solver < Struct.new(:lines)
@@ -27,7 +27,7 @@ move 1 from 1 to 2
             from -= 1
             to -= 1
 
-            count.times { stacks[to].push(stacks[from].pop) }
+            stacks[to].push(*stacks[from].pop(count))
           end
 
           stacks.map(&:last).join

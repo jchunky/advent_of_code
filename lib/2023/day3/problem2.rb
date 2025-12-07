@@ -16,25 +16,49 @@ module Year2023
       end
 
       def self.test_result
-        4361
+        467835
       end
 
       class Solver < Struct.new(:grid)
         def solve
-          part_number_coords
-            .select(&method(:number_adjacent_to_symbol?))
-            .map(&:last)
-            .map(&:to_i)
+          gears
+            .map(&method(:gear_ratio))
             .sum
         end
 
         private
 
+        def gear_ratio(gear_coord)
+          adjacent_part_number_coords = part_number_coords.select do |part_number_coord|
+            gear_adjacent_to_part_number?(gear_coord, part_number_coord)
+          end
+          return 0 unless adjacent_part_number_coords.size == 2
+
+          adjacent_part_number_coords.map(&:last).map(&:to_i).reduce(&:*)
+        end
+
+        def gear_adjacent_to_part_number?(coord, part_number_coord)
+          r, c, number = part_number_coord.flatten
+          number.size.times.any? { |i| adjacent?(coord, [r, c + i]) }
+        end
+
+        def adjacent?((r1, c1), (r2, c2))
+          [r1 - r2, c1 - c2].map(&:abs).max <= 1
+        end
+
         def part_number_coords
-          (0...height).flat_map do |r|
+          @part_number_coords ||= (0...height).flat_map do |r|
             (0...width).map do |c|
               next unless digit?(r, c) && !digit?(r, c - 1)
               [[r, c], grid[r][c..].scan(/\b\d+\b/).first]
+            end.compact
+          end
+        end
+
+        def gears
+          @gears ||= (0...height).flat_map do |r|
+            (0...width).map do |c|
+              [r, c] if gear?(r, c)
             end.compact
           end
         end
@@ -51,6 +75,10 @@ module Year2023
 
         def digit?(r, c)
           at(r, c) =~ /\d/
+        end
+
+        def gear?(r, c)
+          at(r, c) == '*'
         end
 
         def symbol?(r, c)

@@ -7,13 +7,17 @@ module Year2022
       end
 
       def self.test_result
-        7
+        19
       end
 
       def result
+        find_sequence(input, 14)
+      end
+
+      def find_sequence(s, length)
         i = 0
         loop do
-          return i + 4 if input[i, 4].chars.uniq.count == 4
+          return i + length if s[i, length].chars.uniq.count == length
           i += 1
         end
       end

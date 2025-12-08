@@ -9,12 +9,12 @@ abcz
       end
 
       def self.test_result
-        6
+        3
       end
 
       def result
         input.split("\n\n").map do |group|
-          group.delete("\n").chars.uniq.size
+          group.split("\n").map(&:chars).reduce(&:&).size
         end.sum
       end
     end

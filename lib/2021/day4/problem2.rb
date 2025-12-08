@@ -25,7 +25,7 @@ module Year2021
       end
 
       def self.test_result
-        4512
+        1924
       end
 
       def result
@@ -39,11 +39,12 @@ module Year2021
 
         loop do
           number = numbers.shift
+          last_to_win = boards.find { !winner?(it) }
           boards.each do |board|
             mark_board(board, number)
           end
-          winner = boards.find(&method(:winner?))
-          return score(winner) * number if winner
+          all_won = boards.all?(&method(:winner?))
+          return score(last_to_win) * number if all_won
         end
       end
 

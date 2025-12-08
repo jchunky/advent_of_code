@@ -7,7 +7,7 @@ module Year2017
       end
 
       def self.test_result
-        5
+        4
       end
 
       def result
@@ -25,8 +25,8 @@ module Year2017
             amount -= 1
           end
           snapshot = banks.to_s
-          return cycles if history[snapshot]
-          history[snapshot] = true
+          return cycles - history[snapshot] if history[snapshot]
+          history[snapshot] = cycles
         end
       end
     end

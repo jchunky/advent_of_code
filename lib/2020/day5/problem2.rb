@@ -21,7 +21,7 @@ module Year2020
       end
 
       def result
-        lines.map do |line|
+        seats = lines.map do |line|
           chars = line.chars
 
           row = (0..127).to_a
@@ -36,6 +36,8 @@ module Year2020
 
           row.first * 8 + col.first
         end.max
+
+        # (seats.min..seats.max).to_a - seats
       end
     end
   end
